@@ -1,5 +1,6 @@
 ﻿using Webflow.API.Dto.Shared;
 using Webflow.API.Dto.Students;
+using Webflow.Domain.Shared;
 
 namespace Webflow.Application.Services.StudentsService.Interfaces
 {
@@ -14,6 +15,14 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// </summary>
         /// <param name="id">Уникальный идентификатор студента. Может быть null</param>
         /// <returns>Возвращает объект <see cref="BaseResponse{StudentViewDto}"/>, содержащий информацию о студенте или сообщения об ошибках</returns>
-        public Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id, CancellationToken cancellationToken);
+        public Task<BaseResponse<StudentViewDto>> GetStudentById(Guid? id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Получение списка студентов с поддержкой пагинации и сортировки
+        /// </summary>
+        /// <param name="request">Запрос с параметрами пагинации, фильтрации и сортировки</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий список студентов и общую информацию о пагинации</returns>
+        public Task<BaseResponse<PaginatedResponse<StudentViewDto>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken);
     }
 }

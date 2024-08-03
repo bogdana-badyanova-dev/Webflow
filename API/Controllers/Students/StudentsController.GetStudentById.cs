@@ -14,9 +14,9 @@ namespace Webflow.API.Controllers.Students
         /// <response code="200">Возвращает информацию о студенте.</response>
         /// <response code="400">Возвращает ошибку, если идентификатор пустой или не найден студент.</response>
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseResponse<StudentViewDto>>> getStudentById(Guid? id, CancellationToken cancellationToken)
+        public async Task<ActionResult<BaseResponse<StudentViewDto>>> GetStudentById(Guid? id, CancellationToken cancellationToken)
         {
-            var result = await studentsService.getStudentById(id, cancellationToken);
+            var result = await studentsService.GetStudentById(id, cancellationToken);
 
             if (!result.IsSuccess)
             {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Webflow.API.Dto.Students;
+using Webflow.Domain.Shared;
 using Webflow.Domain.Students;
 
 namespace Webflow.Application.Mappings
@@ -13,8 +14,11 @@ namespace Webflow.Application.Mappings
         /// <summary>
         /// Конструктор, который инициализирует правила маппинга
         /// </summary>
-        public StudentMappingProfile() {
+        public StudentMappingProfile()
+        {
             CreateMap<Student, StudentViewDto>();
+
+            CreateMap<PaginatedResponse<Student>, PaginatedResponse<StudentViewDto>>();
         }
     }
 }

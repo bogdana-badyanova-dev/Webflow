@@ -7,12 +7,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 {
     public partial class StudentsService : IStudentsService
     {
-        /// <summary>
-        /// Получает информацию о студенте по идентификатору.
-        /// </summary>
-        /// <param name="id">Идентификатор студента.</param>
-        /// <returns>Возвращает объект ответа с информацией о студенте, если запрос успешен. В противном случае возвращает объект ответа с ошибкой.</returns>
-        public async Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id, CancellationToken cancellationToken)
+        public async Task<BaseResponse<StudentViewDto>> GetStudentById(Guid? id, CancellationToken cancellationToken)
         {
             if (id == null)
             {
@@ -38,7 +33,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 
             return new BaseResponse<StudentViewDto>()
             {
-                IsSuccess = false,
+                IsSuccess = true,
                 Data = studentData,
             };
         }
