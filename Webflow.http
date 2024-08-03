@@ -1,0 +1,6 @@
+@Webflow_HostAddress = http://localhost:5073
+
+GET {{Webflow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
