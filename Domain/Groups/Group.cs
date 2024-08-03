@@ -16,7 +16,7 @@ namespace Webflow.Domain.Groups
         /// <summary>
         /// Список студентов группы
         /// </summary>
-        public ICollection<Student> Students { get; set; } = new List<Student>();
+        public virtual ICollection<Student> Students { get; set; } = new List<Student>();
     }
 
 }

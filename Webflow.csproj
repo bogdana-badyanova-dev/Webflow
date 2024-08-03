@@ -31,12 +31,9 @@
 
   <ItemGroup>
     <Folder Include="Domain\Files\" />
-    <Folder Include="Domain\Cources\" />
-	<Folder Include="Domain\Skills\" />
 	<Folder Include="Domain\CourseResults\" />
 	<Folder Include="Domain\Attendance\" />
 	<Folder Include="Domain\CourseResults\" />
-	<Folder Include="Domain\Skills\" />
   </ItemGroup>
 
 </Project>

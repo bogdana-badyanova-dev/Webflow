@@ -2,6 +2,8 @@
 using Webflow.Domain.Institutes;
 using Webflow.Domain.Groups;
 using Webflow.Domain.Students;
+using Webflow.Domain.Cources;
+using Webflow.Domain.Skills;
 
 namespace Webflow.Infrastructure
 {
@@ -39,5 +41,20 @@ namespace Webflow.Infrastructure
         /// Представление таблицы институтов в базе данных
         /// </summary>
         public DbSet<Institute> Institutes { get; set; } = default!;
+
+        /// <summary>
+        /// Представляет таблицу курсов в базе данных
+        /// </summary>
+        public DbSet<Course> Courses { get; set; } = default!;
+
+        /// <summary>
+        /// Представляет таблицу навыков в базе данных
+        /// </summary>
+        public DbSet<Skill> Skill { get; set; } = default!;
+
+        /// <summary>
+        /// Представление таблицы элементов курсов в СДО СевГУ в базе данных
+        /// </summary>
+        public DbSet<MoodleCourseElement> MoodleCourseElements { get; set; } = default!;
     }
 }

@@ -1,11 +1,11 @@
-﻿using Webflow.Application.Interfaces;
+﻿using Webflow.Domain.Shared;
 
-namespace Webflow.Domain.Shared
+namespace Webflow.Application.Interfaces
 {
     /// <summary>
-    /// Базовый класс для изменяемых сущностей
+    /// Интерфейс для сущностей, которые могут изменяться.
     /// </summary>
-    public abstract class MutableEntity<TId> : BaseEntity<TId>, IMutableEntity<TId>
+    public interface IMutableEntity<T>: IBaseEntity<T>
     {
         /// <summary>
         /// Дата обновления сущности, по умолчанию - null
