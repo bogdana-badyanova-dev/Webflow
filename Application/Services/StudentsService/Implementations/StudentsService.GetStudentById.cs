@@ -1,5 +1,6 @@
 ﻿using Webflow.API.Dto;
 using Webflow.API.Dto.Shared;
+using Webflow.Application.ErrorMessages.Students;
 using Webflow.Application.Services.StudentsService.Interfaces;
 
 namespace Webflow.Application.Services.StudentsService.Implementations
@@ -18,7 +19,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
                 return new BaseResponse<StudentViewDto>
                 {
                     IsSuccess = false,
-                    ErrorMessages = new List<string> { "Идентификатор не может быть пустым" }
+                    ErrorMessages = new List<string>([StudentErrorMessages.ID_CANNOT_BE_NULL])
                 };
             }
 
@@ -29,10 +30,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
                 return new BaseResponse<StudentViewDto>()
                 {
                     IsSuccess = false,
-                    ErrorMessages = new List<string>()
-                    {
-                        "Данные о студенте не найдены"
-                    }
+                    ErrorMessages = new List<string>([StudentErrorMessages.STUDENT_NOT_FOUND])
                 };
             }
 
