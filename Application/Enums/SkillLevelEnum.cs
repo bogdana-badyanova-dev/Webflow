@@ -1,5 +1,8 @@
 namespace Webflow.Application.Enums
 {
+    /// <summary>
+    /// Перечисление уровней навыков
+    /// </summary>
     public enum SkillLevelEnum
     {
         /// <summary>

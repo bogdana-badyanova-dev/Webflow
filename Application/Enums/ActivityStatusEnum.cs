@@ -1,5 +1,8 @@
 namespace Webflow.Application.Enums
 {
+    /// <summary>
+    /// Перечисление статусов активности
+    /// </summary>
     public enum ActivityStatusEnum
     {
         /// <summary>

@@ -2,8 +2,15 @@
 
 namespace Webflow.Domain.Institutes
 {
+    /// <summary>
+    /// Класс, представляющий институт
+    /// </summary>
     public class Institute : BaseEntity<Guid>
     {
-        public string Name { get; set; }
+        /// <summary>
+        /// Название института
+        /// </summary>
+        public required string Name { get; set; }
     }
+
 }

@@ -1,27 +1,29 @@
 ﻿using AutoMapper;
-using Webflow.API.Dto;
-using Webflow.Application.Mappings;
 using Webflow.Application.Services.StudentsService.Interfaces;
-using Webflow.Application.Shared.Exceptions;
 using Webflow.Infrastructure.Repositories.StudentsRepository.Interfaces;
 
 namespace Webflow.Application.Services.StudentsService.Implementations
 {
-    public class StudentsService : IStudentsService
+    /// <summary>
+    /// Сервис для работы с данными студентов
+    /// </summary>
+    /// <remarks>
+    /// Этот сервис предоставляет методы для получения информации о студентах, используя репозиторий студентов и маппер для преобразования данных
+    /// </remarks>
+    public partial class StudentsService : IStudentsService
     {
         private readonly IStudentsRepository studentsRepository;
         private readonly IMapper mapper;
-        public StudentsService(IMapper mapper,IStudentsRepository studentsRepository) {
+
+        /// <summary>
+        /// Конструктор сервиса студентов
+        /// </summary>
+        /// <param name="mapper">Маппер для преобразования данных студентов в представления</param>
+        /// <param name="studentsRepository">Репозиторий для доступа к данным студентов</param>
+        public StudentsService(IMapper mapper, IStudentsRepository studentsRepository)
+        {
             this.studentsRepository = studentsRepository;
             this.mapper = mapper;
-        }
-        public async Task<StudentViewDto> getStudentById(Guid id)
-        {
-            var result = await studentsRepository.GetByIdAsync(id);
-            if (result == null) {
-                throw new NotFoundException("User not found");
-            }
-            return mapper.Map<StudentViewDto>(result);
         }
     }
 }

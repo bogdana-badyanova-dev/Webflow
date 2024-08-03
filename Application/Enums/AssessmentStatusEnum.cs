@@ -1,5 +1,8 @@
 namespace Webflow.Application.Enums
 {
+    /// <summary>
+    /// Перечисление статусов ассесмента
+    /// </summary>
     public enum AssessmentStatusEnum
     {
         /// <summary>

@@ -1,5 +1,8 @@
 namespace Webflow.Application.Enums
 {
+    /// <summary>
+    /// Перечисление поддерживаемых платформ
+    /// </summary>
     public enum PlatformEnum
     {
         /// <summary>

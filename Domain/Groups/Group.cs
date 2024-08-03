@@ -3,11 +3,20 @@ using Webflow.Domain.Students;
 
 namespace Webflow.Domain.Groups
 {
-    public class Group: MutableEntity <Guid>
+    /// <summary>
+    /// Класс, представляющий группу студентов
+    /// </summary>
+    public class Group : MutableEntity<Guid>
     {
-        public string Name { get; set; }
-        public ICollection<Student> Students { get; set; }
+        /// <summary>
+        /// Название группы
+        /// </summary>
+        public required string Name { get; set; }
 
-
+        /// <summary>
+        /// Список студентов группы
+        /// </summary>
+        public ICollection<Student> Students { get; set; } = new List<Student>();
     }
+
 }

@@ -1,5 +1,8 @@
 ﻿namespace Webflow.Application.Enums
 {
+    /// <summary>
+    /// Перечисление полов
+    /// </summary>
     public enum GenderEnum
     {
         /// <summary>

@@ -1,10 +1,19 @@
 ﻿using Webflow.API.Dto;
+using Webflow.API.Dto.Shared;
 
 namespace Webflow.Application.Services.StudentsService.Interfaces
 {
+    /// <summary>
+    /// Интерфейс для сервиса управления студентами
+    /// Предоставляет методы для выполнения операций над данными студентов
+    /// </summary>
     public interface IStudentsService
     {
-        public Task<StudentViewDto> getStudentById(Guid id);
-
+        /// <summary>
+        /// Получает данные студента по уникальному идентификатору
+        /// </summary>
+        /// <param name="id">Уникальный идентификатор студента. Может быть null</param>
+        /// <returns>Возвращает объект <see cref="BaseResponse{StudentViewDto}"/>, содержащий информацию о студенте или сообщения об ошибках</returns>
+        public Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id);
     }
 }
