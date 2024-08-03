@@ -11,7 +11,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
         /// </summary>
         /// <param name="id">Идентификатор студента.</param>
         /// <returns>Возвращает объект ответа с информацией о студенте, если запрос успешен. В противном случае возвращает объект ответа с ошибкой.</returns>
-        public async Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id)
+        public async Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id, CancellationToken cancellationToken)
         {
             if (id == null)
             {
@@ -22,7 +22,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
                 };
             }
 
-            var result = await studentsRepository.GetByIdAsync((Guid)id);
+            var result = await studentsRepository.GetByIdAsync((Guid)id, cancellationToken);
 
             if (result == null)
             {

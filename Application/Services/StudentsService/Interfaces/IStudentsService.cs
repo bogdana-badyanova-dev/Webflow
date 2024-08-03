@@ -14,6 +14,6 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// </summary>
         /// <param name="id">Уникальный идентификатор студента. Может быть null</param>
         /// <returns>Возвращает объект <see cref="BaseResponse{StudentViewDto}"/>, содержащий информацию о студенте или сообщения об ошибках</returns>
-        public Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id);
+        public Task<BaseResponse<StudentViewDto>> getStudentById(Guid? id, CancellationToken cancellationToken);
     }
 }
