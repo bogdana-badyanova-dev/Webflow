@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Webflow.API.Dto;
+using Webflow.API.Dto.Students;
 using Webflow.Domain.Students;
 
 namespace Webflow.Application.Mappings

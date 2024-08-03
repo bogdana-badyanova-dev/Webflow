@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Webflow.API.Dto;
 using Webflow.API.Dto.Shared;
+using Webflow.API.Dto.Students;
 
 namespace Webflow.API.Controllers.Students
 {

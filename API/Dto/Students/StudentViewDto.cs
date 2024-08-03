@@ -3,7 +3,7 @@ using Webflow.Domain.Groups;
 using Webflow.Domain.Institutes;
 using Webflow.Domain.Shared;
 
-namespace Webflow.API.Dto
+namespace Webflow.API.Dto.Students
 {
     /// <summary>
     /// Объект передачи данных студента

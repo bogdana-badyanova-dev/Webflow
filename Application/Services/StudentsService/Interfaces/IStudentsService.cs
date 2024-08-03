@@ -1,5 +1,5 @@
-﻿using Webflow.API.Dto;
-using Webflow.API.Dto.Shared;
+﻿using Webflow.API.Dto.Shared;
+using Webflow.API.Dto.Students;
 
 namespace Webflow.Application.Services.StudentsService.Interfaces
 {
