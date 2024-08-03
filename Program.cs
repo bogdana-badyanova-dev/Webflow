@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Webflow.Data;
-using Webflow.Repositories.BaseRepository.Implementations;
-using Webflow.Repositories.BaseRepository.Interfaces;
-using Webflow.Repositories.FilesRepository.Implementations;
-using Webflow.Repositories.FilesRepository.Interfaces;
-using Webflow.Services.FilesService.Implementations;
-using Webflow.Services.FilesService.Interfaces;
+using Webflow.Application.Services.FilesService.Implementations;
+using Webflow.Application.Services.FilesService.Interfaces;
+using Webflow.Infrastructure;
+using Webflow.Infrastructure.Repositories.BaseRepository.Implementations;
+using Webflow.Infrastructure.Repositories.BaseRepository.Interfaces;
+using Webflow.Infrastructure.Repositories.FilesRepository.Implementations;
+using Webflow.Infrastructure.Repositories.FilesRepository.Interfaces;
 
 namespace Webflow
 {
@@ -21,7 +21,7 @@ namespace Webflow
 
             builder.Services.AddScoped<IFilesService, FilesService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
-            builder.Services.AddScoped<IBaseRepository<Models.File>, BaseRepository<Models.File>>();
+            builder.Services.AddScoped<IBaseRepository<Domain.Files.File>, BaseRepository<Domain.Files.File>>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

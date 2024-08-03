@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -26,6 +26,21 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="API\Dto\" />
+    <Folder Include="Domain\Files\" />
+    <Folder Include="Domain\Cources\" />
+	<Folder Include="Domain\Institutes\" />
+	<Folder Include="Domain\Skills\" />
+	<Folder Include="Domain\Students\" />
+	<Folder Include="Domain\CourseResults\" />
+	<Folder Include="Domain\Attendance\" />
+	<Folder Include="Domain\CourseResults\" />
+	<Folder Include="Domain\Institutes\" />
+	<Folder Include="Domain\Students\" />
+	<Folder Include="Domain\Skills\" />
   </ItemGroup>
 
 </Project>

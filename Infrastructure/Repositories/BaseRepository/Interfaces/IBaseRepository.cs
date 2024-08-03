@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Webflow.Repositories.BaseRepository.Interfaces
+namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {

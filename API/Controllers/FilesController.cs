@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Webflow.Services.FilesService.Interfaces;
+using Webflow.Application.Services.FilesService.Interfaces;
 
-namespace Webflow.Controllers
+namespace Webflow.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,7 +16,7 @@ namespace Webflow.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Models.File>> GetFileById(Guid id)
+        public async Task<ActionResult<Domain.Files.File>> GetFileById(Guid id)
         {
             var file = await filesService.GetFileByIdAsync(id);
 
@@ -29,7 +29,7 @@ namespace Webflow.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.File>>> GetFiles()
+        public async Task<ActionResult<IEnumerable<Domain.Files.File>>> GetFiles()
         {
             var files = await filesService.GetFiles();
 
@@ -37,7 +37,7 @@ namespace Webflow.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Models.File>> AddFile(Models.File file)
+        public async Task<ActionResult<Domain.Files.File>> AddFile(Domain.Files.File file)
         {
             var createdFile = await filesService.AddFileAsync(file);
             return CreatedAtAction(nameof(GetFileById), createdFile);

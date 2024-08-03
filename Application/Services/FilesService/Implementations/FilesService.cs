@@ -1,7 +1,7 @@
-﻿using Webflow.Repositories.FilesRepository.Interfaces;
-using Webflow.Services.FilesService.Interfaces;
+﻿using Webflow.Application.Services.FilesService.Interfaces;
+using Webflow.Infrastructure.Repositories.FilesRepository.Interfaces;
 
-namespace Webflow.Services.FilesService.Implementations
+namespace Webflow.Application.Services.FilesService.Implementations
 {
     public class FilesService : IFilesService
     {
@@ -12,12 +12,12 @@ namespace Webflow.Services.FilesService.Implementations
             _filesRepository = filesRepository;
         }
 
-        public async Task<IEnumerable<Models.File>> GetFiles()
+        public async Task<IEnumerable<Domain.Files.File>> GetFiles()
         {
             return await _filesRepository.GetAllAsync();
         }
 
-        public async Task<bool> AddFileAsync(Models.File file)
+        public async Task<bool> AddFileAsync(Domain.Files.File file)
         {
             return await _filesRepository.AddAsync(file);
         }
@@ -33,7 +33,7 @@ namespace Webflow.Services.FilesService.Implementations
             return false;
         }
 
-        public async Task<Models.File> GetFileByIdAsync(Guid id)
+        public async Task<Domain.Files.File> GetFileByIdAsync(Guid id)
         {
             return await _filesRepository.GetByIdAsync(id);
         }

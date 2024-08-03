@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Webflow.Data;
-using Webflow.Repositories.BaseRepository.Interfaces;
+using Webflow.Infrastructure;
+using Webflow.Infrastructure.Repositories.BaseRepository.Interfaces;
 
-namespace Webflow.Repositories.BaseRepository.Implementations
+namespace Webflow.Infrastructure.Repositories.BaseRepository.Implementations
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
