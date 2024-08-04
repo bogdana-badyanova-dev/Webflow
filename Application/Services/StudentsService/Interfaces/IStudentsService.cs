@@ -25,5 +25,13 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ, содержащий список студентов и общую информацию о пагинации</returns>
         public Task<BaseResponse<PaginatedResponse<StudentViewDto>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Удаление студента по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор студента</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий результат операции удаления</returns>
+        public Task<BaseResponse<string>> DeleteStudent(Guid? id, CancellationToken cancellationToken);
     }
 }

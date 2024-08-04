@@ -9,7 +9,7 @@ namespace Webflow.API.Controllers.Students
     /// <remarks>
     /// Этот контроллер предоставляет методы для получения, создания, обновления и удаления информации о студентах.
     /// </remarks>
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public partial class StudentsController : ControllerBase
     {
@@ -24,4 +24,5 @@ namespace Webflow.API.Controllers.Students
             this.studentsService = studentsService;
         }
     }
+
 }
