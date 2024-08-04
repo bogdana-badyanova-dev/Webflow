@@ -6,7 +6,7 @@ namespace Webflow.API.Controllers.Auth
     /// <summary>
     /// Контроллер для обработки запросов аутентификации
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public partial class AuthController : ControllerBase
     {
