@@ -10,12 +10,11 @@ namespace Webflow.Domain.Shared
         /// <summary>
         /// Наименование поля, по которому выполняется сортировка
         /// </summary>
-        public required string FieldName { get; set; }
+        public string FieldName { get; set; }
 
         /// <summary>
-        /// Направление сортировк
+        /// Направление сортировки
         /// </summary>
-        public required SortDirectionEnum Direction { get; set; }
+        public SortDirectionEnum Direction { get; set; }
     }
-
 }

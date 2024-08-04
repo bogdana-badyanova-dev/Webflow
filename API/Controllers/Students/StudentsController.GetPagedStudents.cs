@@ -7,6 +7,14 @@ namespace Webflow.API.Controllers.Students
 {
     public partial class StudentsController : ControllerBase
     {
+        /// <summary>
+        /// Получает список студентов с поддержкой пагинации и сортировки
+        /// </summary>
+        /// <param name="request">Запрос для получения студентов с параметрами пагинации и сортировки</param>
+        /// <param name="cancellationToken">Токен для отмены операции</param>
+        /// <returns>Ответ с пагинированными данными о студентах</returns>
+        /// <response code="200">Успешный ответ с данными о студентах</response>
+        /// <response code="400">Ошибка при обработке запроса, например, неверные параметры</response>
         [HttpPost("paged-students")]
         public async Task<ActionResult<BaseResponse<PaginatedResponse<StudentViewDto>>>> GetPagedStudent(GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
