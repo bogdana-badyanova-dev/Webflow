@@ -1,4 +1,6 @@
-﻿namespace Webflow.Application.ErrorMessages.Students
+﻿using Webflow.Application.Messages.ErrorMessages;
+
+namespace Webflow.Application.Messages.ErrorMessages.Students
 {
     /// <summary>
     /// Абстрактный класс, содержащий сообщения об ошибках, специфичные для операций со студентами.
@@ -15,6 +17,11 @@
         /// Сообщение об ошибке, когда данные о студентах не найдены.
         /// </summary>
         public const string STUDENTS_NOT_FOUND = "Данные о студентах не найдены";
+
+        /// <summary>
+        /// Сообщение об ошибке, когда студент не может быть удален.
+        /// </summary>
+        public const string STUDENT_CANNOT_DELETE = "Студент не может быть удален";
     }
 
 }

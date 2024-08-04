@@ -1,4 +1,4 @@
-﻿namespace Webflow.Application.ErrorMessages
+﻿namespace Webflow.Application.Messages.ErrorMessages
 {
     /// <summary>
     /// Абстрактный класс, содержащий общие сообщения об ошибках, используемые в различных частях приложения.

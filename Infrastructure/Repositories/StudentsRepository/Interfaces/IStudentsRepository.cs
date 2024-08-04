@@ -10,6 +10,7 @@ namespace Webflow.Infrastructure.Repositories.StudentsRepository.Interfaces
     /// </summary>
     public interface IStudentsRepository :IBaseRepository<Student>
     {
+
         /// <summary>
         /// Получение студентов с поддержкой пагинации, фильтрации и сортировки
         /// </summary>
