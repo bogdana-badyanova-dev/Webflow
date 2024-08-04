@@ -23,7 +23,10 @@ namespace Webflow.Infrastructure.Repositories.StudentsRepository.Implementations
 
         public async Task<PaginatedResponse<Student>> GetPagedAsync(GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
+            
             IQueryable<Student> query = _dbSet;
+
+            query = query.Where(s => s.RemovedAt == null);
 
             // Фильтрация по имени, если задано
             if (!string.IsNullOrWhiteSpace(request.Name))

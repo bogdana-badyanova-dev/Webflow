@@ -23,6 +23,6 @@ namespace Webflow.API.Controllers.Students
         {
             this.studentsService = studentsService;
         }
-    }
+    }   
 
 }
