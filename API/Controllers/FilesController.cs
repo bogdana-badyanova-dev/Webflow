@@ -1,5 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Webflow.Application.Services.FilesService.Interfaces;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Google.Apis.Services;
+using Newtonsoft.Json;
+using System.IO;
+using System.Threading.Tasks;
+using Google.Apis.Drive.v3.Data;
 
 namespace Webflow.API.Controllers
 {
@@ -7,52 +15,57 @@ namespace Webflow.API.Controllers
     [ApiController]
     public class FilesController : ControllerBase
     {
-
         private readonly IFilesService filesService;
+        private readonly IConfiguration configuration;
 
-        public FilesController(IFilesService filesService)
+        public FilesController(IFilesService filesService, IConfiguration configuration)
         {
             this.filesService = filesService;
+            this.configuration = configuration;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Domain.Files.File>> GetFileById(Guid id, CancellationToken cancellationToken)
+        [HttpPost("upload")]
+        public async Task<ActionResult<string>> FileUpload(string filePath)
         {
-            var file = await filesService.GetFileByIdAsync(id, cancellationToken);
+            filePath = @"C:\Users\timur\Desktop\memy\1.jpg";
+            var googleApiConfig = configuration.GetSection("GoogleApi").Get<Dictionary<string, string>>();
+            string jsonCredentials = JsonConvert.SerializeObject(googleApiConfig);
+            var folderId = googleApiConfig["folder_id"];
 
-            if (file == null)
+            GoogleCredential credential;
+            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(jsonCredentials)))
             {
-                return NotFound();
+                credential = GoogleCredential.FromStream(stream)
+                    .CreateScoped(DriveService.Scope.Drive);
             }
 
-            return Ok(file);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Domain.Files.File>>> GetFiles(CancellationToken cancellationToken)
-        {
-            var files = await filesService.GetFiles(cancellationToken);
-
-            return Ok(files);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Domain.Files.File>> AddFile(Domain.Files.File file, CancellationToken cancellationToken)
-        {
-            var createdFile = await filesService.AddFileAsync(file, cancellationToken);
-            return CreatedAtAction(nameof(GetFileById), createdFile);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteFile(Guid id, CancellationToken cancellationToken)
-        {
-            var result = await filesService.DeleteFileAsync(id, cancellationToken);
-            if (!result)
+            // Create Drive API service.
+            var service = new DriveService(new BaseClientService.Initializer
             {
-                return NotFound(result);
+                HttpClientInitializer = credential,
+                ApplicationName = "Drive API Snippets"
+            });
+
+            // Upload file on drive.
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = Path.GetFileName(filePath),
+                Parents = new List<string> { folderId } // Указание родительской папки
+            };
+
+            FilesResource.CreateMediaUpload request;
+            // Create a new file on drive.
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                // Create a new file, with metadata and stream.
+                request = service.Files.Create(fileMetadata, stream, "image/jpeg");
+                request.Fields = "id";
+                await request.UploadAsync();
             }
 
-            return Ok(result);
+            var file = request.ResponseBody;
+
+            return Ok(file.Id);
         }
     }
 }
