@@ -10,6 +10,6 @@ namespace Webflow.Application.Interfaces
         /// <summary>
         /// Элементы курса в СДО СевГУ
         /// </summary>
-        IEnumerable<MoodleCourseElement> CourseElements { get; set; }
+        public IEnumerable<MoodleCourseElement> CourseElements { get; set; }
     }
 }

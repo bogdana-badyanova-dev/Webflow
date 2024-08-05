@@ -6,7 +6,7 @@ namespace Webflow.Domain.Cources
     /// <summary>
     /// Класс, представляющий курс, предлагаемый АНО "Университет Иннополис"
     /// </summary>
-    public class InnopolisCourse : BaseCourse, IInnopolisCourse
+    public class InnopolisCourse : BaseCourse, IInnopolisCourse, IMutableEntity<Guid>
     {
         /// <summary>
         /// Количество этапов оценки курса

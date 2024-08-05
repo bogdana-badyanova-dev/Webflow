@@ -7,27 +7,26 @@ namespace Webflow.Application.Interfaces
     /// <summary>
     /// Интерфейс для курса
     /// </summary>
-    public interface ICourse: IMutableEntity<Guid>
+    public interface ICourse : IMutableEntity<Guid>
     {
         /// <summary>
         /// Название курса
         /// </summary>
-        string Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Платформа, на которой предлагается курс
         /// </summary>
-        PlatformEnum Platform { get; set; }
+        public PlatformEnum Platform { get; set; }
 
         /// <summary>
         /// Навыки, связанные с курсом
         /// </summary>
-        ICollection<Skill> Skills { get; set; }
+        public ICollection<Skill> Skills { get; set; }
 
         /// <summary>
         /// Студенты, записанные на курс
         /// </summary>
-        ICollection<Student> Students { get; set; }
+        public ICollection<Student> Students { get; set; }
     }
-
 }
