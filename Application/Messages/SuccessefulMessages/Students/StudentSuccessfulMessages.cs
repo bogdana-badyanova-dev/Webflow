@@ -6,7 +6,5 @@
         /// Сообщение об успешном удалении студента.
         /// </summary>
         public const string STUDENT_DELETED = "Студент удален";
-
-
     }
 }

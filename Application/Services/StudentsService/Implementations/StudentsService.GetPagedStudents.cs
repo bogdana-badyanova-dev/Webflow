@@ -11,6 +11,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
         public async Task<BaseResponse<PaginatedResponse<StudentViewDto>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
             var result = await studentsRepository.GetPagedAsync(request, cancellationToken);
+
             var response = new BaseResponse<PaginatedResponse<StudentViewDto>>()
             {
                 IsSuccess = false,

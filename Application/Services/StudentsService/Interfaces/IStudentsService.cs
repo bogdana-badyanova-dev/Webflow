@@ -33,5 +33,21 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ, содержащий результат операции удаления</returns>
         public Task<BaseResponse<string>> DeleteStudent(Guid? id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Мягкое удаление студента по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор студента</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий результат операции удаления</returns>
+        public Task<BaseResponse<string>> SoftDeleteStudent(Guid? id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Создание студента по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор студента</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий результат операции удаления</returns>
+        public Task<BaseResponse<string>> CreateStudent(CreateStudentRequest request, CancellationToken cancellationToken);
     }
 }
