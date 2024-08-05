@@ -1,4 +1,4 @@
-﻿using Webflow.Application.Messages.ErrorMessages;
+using Webflow.Application.Messages.ErrorMessages;
 
 namespace Webflow.Application.Messages.ErrorMessages.Students
 {

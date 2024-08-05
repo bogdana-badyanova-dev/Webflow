@@ -17,6 +17,7 @@ namespace Webflow.Application.Mappings
         public StudentMappingProfile()
         {
             CreateMap<Student, StudentViewDto>();
+            CreateMap<CreateStudentRequest, Student>();
 
             CreateMap<PaginatedResponse<Student>, PaginatedResponse<StudentViewDto>>();
         }

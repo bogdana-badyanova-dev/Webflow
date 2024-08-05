@@ -1,4 +1,4 @@
-﻿using Webflow.API.Dto.Shared;
+using Webflow.API.Dto.Shared;
 using Webflow.API.Dto.Students;
 using Webflow.Domain.Shared;
 
