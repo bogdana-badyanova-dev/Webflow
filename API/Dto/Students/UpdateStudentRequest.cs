@@ -1,54 +1,59 @@
-﻿using Webflow.Application.Enums;
-using Webflow.Domain.Cources;
-using Webflow.Domain.Groups;
-using Webflow.Domain.Institutes;
-using Webflow.Domain.Shared;
+﻿using System.ComponentModel;
+using Webflow.Application.Enums;
 
-namespace Webflow.Domain.Students
+namespace Webflow.API.Dto.Students
 {
     /// <summary>
-    /// Класс, представляющий студента
+    /// Запрос для Обновления данных о студенте
     /// </summary>
-    public class Student : MutableEntity<Guid>
+    public class UpdateStudentRequest 
     {
         /// <summary>
         /// Имя студента
         /// </summary>
-        public required string FirstName { get; set; }
+        [DefaultValue(null)]
+        public string? FirstName { get; set; }
 
         /// <summary>
         /// Фамилия студента
         /// </summary>
-        public required string LastName { get; set; }
+        [DefaultValue(null)]
+        public string? LastName { get; set; }
 
         /// <summary>
         /// Отчество студента
         /// </summary>
+        [DefaultValue(null)]
         public string? MiddleName { get; set; }
 
         /// <summary>
         /// Дата рождения студента
         /// </summary>
+        [DefaultValue(null)]
         public DateTime? BirthDate { get; set; }
 
         /// <summary>
         /// Электронная почта студента
         /// </summary>
-        public required string Email { get; set; }
+        [DefaultValue("example@gmail.com")]
+        public string? Email { get; set; }
 
         /// <summary>
         /// Номер телефона студента
         /// </summary>
+        [DefaultValue("+77777777777")]
         public string? Phone { get; set; }
 
         /// <summary>
         /// Идентификатор аккаунта студента в Moodle
         /// </summary>
+        [DefaultValue(null)]
         public string? MoodleAccountId { get; set; }
 
         /// <summary>
         /// Идентификатор аккаунта студента в Иннополисе
         /// </summary>
+        [DefaultValue(null)]
         public string? InopolisAccountId { get; set; }
 
         /// <summary>
@@ -59,24 +64,13 @@ namespace Webflow.Domain.Students
         /// <summary>
         /// Идентификатор группы, к которой относится студент
         /// </summary>
+        [DefaultValue(null)]
         public Guid? GroupId { get; set; }
-
-        /// <summary>
-        /// Группа, к которой относится студент
-        /// </summary>
-        public Group? Group { get; set; }
 
         /// <summary>
         /// Идентификатор института, к которому относится студент
         /// </summary>
+        [DefaultValue(null)]
         public Guid? InstituteId { get; set; }
-
-        /// <summary>
-        /// Институт, к которому относится студент
-        /// </summary>
-        public Institute? Institute { get; set; }
-
-        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
-
 }

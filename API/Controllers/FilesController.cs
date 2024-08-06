@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Webflow.Application.Services.FilesService.Interfaces;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Newtonsoft.Json;
-using System.IO;
-using System.Threading.Tasks;
-using Google.Apis.Drive.v3.Data;
 
 namespace Webflow.API.Controllers
 {
@@ -25,9 +21,8 @@ namespace Webflow.API.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<ActionResult<string>> FileUpload(string filePath)
+        public async Task<ActionResult<string>> FileUpload(IFormFile file)
         {
-            filePath = @"C:\Users\timur\Desktop\memy\1.jpg";
             var googleApiConfig = configuration.GetSection("GoogleApi").Get<Dictionary<string, string>>();
             string jsonCredentials = JsonConvert.SerializeObject(googleApiConfig);
             var folderId = googleApiConfig["folder_id"];
@@ -39,33 +34,31 @@ namespace Webflow.API.Controllers
                     .CreateScoped(DriveService.Scope.Drive);
             }
 
-            // Create Drive API service.
             var service = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = credential,
                 ApplicationName = "Drive API Snippets"
             });
 
-            // Upload file on drive.
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
-                Name = Path.GetFileName(filePath),
-                Parents = new List<string> { folderId } // Указание родительской папки
+                Name = Path.GetFileName(file.FileName),
+                Parents = new List<string> { folderId }
             };
 
             FilesResource.CreateMediaUpload request;
-            // Create a new file on drive.
-            using (var stream = new FileStream(filePath, FileMode.Open))
+            using (var stream = new MemoryStream())
             {
-                // Create a new file, with metadata and stream.
-                request = service.Files.Create(fileMetadata, stream, "image/jpeg");
+                await file.CopyToAsync(stream);
+                stream.Position = 0;
+                request = service.Files.Create(fileMetadata, stream, file.ContentType);
                 request.Fields = "id";
                 await request.UploadAsync();
             }
 
-            var file = request.ResponseBody;
+            var uploadedFile = request.ResponseBody;
 
-            return Ok(file.Id);
+            return Ok(uploadedFile.Id);
         }
     }
 }

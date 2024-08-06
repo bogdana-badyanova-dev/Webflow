@@ -1,4 +1,4 @@
-﻿using Webflow.Application.Messages.ErrorMessages;
+using Webflow.Application.Messages.ErrorMessages;
 
 namespace Webflow.Application.Messages.ErrorMessages.Students
 {
@@ -26,6 +26,11 @@ namespace Webflow.Application.Messages.ErrorMessages.Students
         /// Сообщение об ошибке, когда студент не может быть удален.
         /// </summary>
         public const string STUDENT_CANNOT_CREATE = "Студент не может быть создан";
+
+        /// <summary>
+        /// Сообщение об ошибке, когда данные о студенте не могу быть обновлены.
+        /// </summary>
+        public const string STUDENT_CANNOT_UPDATE = "Данные о студенте не могу быть обновлены";
     }
 
 }
