@@ -27,12 +27,11 @@ namespace Webflow.Application.Services.StudentsService.Implementations
                 return response;
             }
 
-            var domainStudent = mapper.Map<Student>(request);
+            mapper.Map( request,student);
 
-            domainStudent.Id = (Guid)id;
+            student.UpdatedAt = DateTime.UtcNow;
 
-
-            var result = await studentsRepository.UpdateAsync(domainStudent, cancellationToken);
+            var result = await studentsRepository.UpdateAsync(student, cancellationToken);
 
             if (result == null)
             {

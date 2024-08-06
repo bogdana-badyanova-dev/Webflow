@@ -1,4 +1,5 @@
 ﻿using Webflow.Application.Enums;
+using Webflow.Domain.Cources;
 using Webflow.Domain.Groups;
 using Webflow.Domain.Institutes;
 using Webflow.Domain.Shared;
@@ -74,6 +75,8 @@ namespace Webflow.Domain.Students
         /// Институт, к которому относится студент
         /// </summary>
         public Institute? Institute { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 
 }
