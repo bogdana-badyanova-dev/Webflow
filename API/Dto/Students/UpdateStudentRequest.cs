@@ -1,24 +1,24 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Webflow.Application.Enums;
 
 namespace Webflow.API.Dto.Students
 {
     /// <summary>
-    /// Запрос для создания студента
+    /// Запрос для Обновления данных о студенте
     /// </summary>
-    public class CreateStudentRequest 
+    public class UpdateStudentRequest 
     {
         /// <summary>
         /// Имя студента
         /// </summary>
-        [DefaultValue("Sasha")]
-        new public required string FirstName { get; set; }
+        [DefaultValue(null)]
+        public string? FirstName { get; set; }
 
         /// <summary>
         /// Фамилия студента
         /// </summary>
-        [DefaultValue("Gray")]
-        new public required string LastName { get; set; }
+        [DefaultValue(null)]
+        public string? LastName { get; set; }
 
         /// <summary>
         /// Отчество студента
@@ -27,16 +27,16 @@ namespace Webflow.API.Dto.Students
         public string? MiddleName { get; set; }
 
         /// <summary>
-        /// Электронная почта студента
-        /// </summary>
-        [DefaultValue("example@gmail.com")]
-
-        new public required string Email { get; set; }
-        /// <summary>
         /// Дата рождения студента
         /// </summary>
         [DefaultValue(null)]
         public DateTime? BirthDate { get; set; }
+
+        /// <summary>
+        /// Электронная почта студента
+        /// </summary>
+        [DefaultValue("example@gmail.com")]
+        public string? Email { get; set; }
 
         /// <summary>
         /// Номер телефона студента
@@ -72,6 +72,5 @@ namespace Webflow.API.Dto.Students
         /// </summary>
         [DefaultValue(null)]
         public Guid? InstituteId { get; set; }
-
     }
 }
