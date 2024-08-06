@@ -1,7 +1,6 @@
-﻿using Webflow.API.Dto.Shared;
+using Webflow.API.Dto.Shared;
 using Webflow.API.Dto.Students;
 using Webflow.Application.Messages.ErrorMessages.Students;
-using Webflow.Application.Messages.SuccessefulMessages.Students;
 using Webflow.Application.Services.StudentsService.Interfaces;
 using Webflow.Domain.Students;
 
@@ -11,7 +10,8 @@ namespace Webflow.Application.Services.StudentsService.Implementations
     {
         public async Task<BaseResponse<StudentViewDto>> CreateStudent(CreateStudentRequest request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<StudentViewDto>() {
+            var response = new BaseResponse<StudentViewDto>()
+            {
                 IsSuccess = false,
                 ErrorMessages = new List<string>()
             };
@@ -31,4 +31,3 @@ namespace Webflow.Application.Services.StudentsService.Implementations
         }
     }
 }
-   
