@@ -2,7 +2,7 @@
 using Webflow.Domain.Skills;
 using Webflow.Domain.Students;
 
-namespace Webflow.Application.Interfaces
+namespace Webflow.Application.Interfaces.Courses
 {
     /// <summary>
     /// Интерфейс для курса

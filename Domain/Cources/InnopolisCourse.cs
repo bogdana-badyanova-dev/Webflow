@@ -1,5 +1,6 @@
 ﻿using Webflow.Application.Enums;
 using Webflow.Application.Interfaces;
+using Webflow.Application.Interfaces.Courses;
 
 namespace Webflow.Domain.Cources
 {

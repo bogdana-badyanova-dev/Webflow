@@ -1,4 +1,4 @@
-﻿namespace Webflow.Application.Interfaces
+﻿namespace Webflow.Application.Interfaces.CourseResults
 {
     /// <summary>
     /// Интерфейс для результата курса

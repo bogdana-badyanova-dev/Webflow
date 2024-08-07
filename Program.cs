@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OfficeOpenXml;
 using System.Reflection;
 using System.Text;
 using Webflow.Application.Helpers;
 using Webflow.Application.Interfaces;
+using Webflow.Application.Interfaces.Courses;
+using Webflow.Application.Interfaces.Import;
 using Webflow.Application.Services.AuthService.Implementations;
 using Webflow.Application.Services.AuthService.Interfaces;
 using Webflow.Application.Services.FilesService.Implementations;
@@ -30,6 +33,8 @@ namespace Webflow
     {
         public static void Main(string[] args)
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<WebflowContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("WebflowContext") ?? throw new InvalidOperationException("Connection string 'WebflowContext' not found.")));
@@ -58,14 +63,17 @@ namespace Webflow
                 };
             });
 
-            builder.Services.AddScoped<IFilesService, FilesService>();
+            builder.Services.AddScoped<IFilesService, GoogleDriveService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
-            builder.Services.AddScoped<IBaseRepository<Domain.Files.File>, BaseRepository<Domain.Files.File>>();
+            builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
             builder.Services.AddScoped<IStudentsService, StudentsService>();
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<IFactory<ICourse>, CourseFactory>();
+            builder.Services.AddScoped<InnopolisImportStrategy>();
+            builder.Services.AddScoped<MoodleImportStrategy>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
+            builder.Services.AddScoped<IImportStrategyFactory<ImportResult>, ImportStrategyFactory>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

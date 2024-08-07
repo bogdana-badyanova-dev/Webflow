@@ -1,4 +1,4 @@
-﻿using Webflow.Application.Interfaces;
+﻿using Webflow.Application.Interfaces.CourseResults;
 using Webflow.Domain.Shared;
 
 namespace Webflow.Domain.CourseResults

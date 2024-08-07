@@ -2,7 +2,7 @@
 
 namespace Webflow.Infrastructure.Repositories.FilesRepository.Interfaces
 {
-    public interface IFilesRepository : IBaseRepository<Domain.Files.File>
+    public interface IFilesRepository : IBaseRepository<Domain.Files.UploadedFile>
     {
 
     }

@@ -12,7 +12,7 @@ namespace Webflow.API.Controllers.Files
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ с идентификатором загруженного файла или ошибка</returns>
         [HttpPost("upload")]
-        public async Task<ActionResult<BaseResponse<string>>> FileUpload(IFormFile file, CancellationToken cancellationToken)
+        public async Task<ActionResult<BaseResponse<string>>> UploadFile(IFormFile file, CancellationToken cancellationToken)
         {
             var result = await filesService.UploadFile(file, cancellationToken);
 

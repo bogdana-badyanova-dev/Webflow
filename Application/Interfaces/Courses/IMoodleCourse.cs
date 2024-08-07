@@ -1,11 +1,11 @@
 ﻿using Webflow.Domain.Cources;
 
-namespace Webflow.Application.Interfaces
+namespace Webflow.Application.Interfaces.Courses
 {
     /// <summary>
     /// Интерфейс для курса в СДО СевГУ
     /// </summary>
-    public interface IMoodleCourse: ICourse
+    public interface IMoodleCourse : ICourse
     {
         /// <summary>
         /// Элементы курса в СДО СевГУ

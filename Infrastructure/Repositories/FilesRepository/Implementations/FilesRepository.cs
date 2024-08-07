@@ -3,7 +3,7 @@ using Webflow.Infrastructure.Repositories.FilesRepository.Interfaces;
 
 namespace Webflow.Infrastructure.Repositories.FilesRepository.Implementations
 {
-    public class FilesRepository : BaseRepository<Domain.Files.File>, IFilesRepository
+    public class FilesRepository : BaseRepository<Domain.Files.UploadedFile>, IFilesRepository
     {
         public FilesRepository(WebflowContext context) : base(context)
         {

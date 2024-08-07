@@ -65,11 +65,11 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Implementations
         /// <param name="entity">Добавляемая сущность</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>True, если сущность успешно добавлена, иначе false</returns>
-        public async Task<bool> AddAsync(T entity, CancellationToken cancellationToken)
+        public async Task<Guid> AddAsync(T entity, CancellationToken cancellationToken)
         {
-            var result = await _dbSet.AddAsync(entity, cancellationToken);
+            await _dbSet.AddAsync(entity, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
-            return result.State == EntityState.Added;
+            return entity.Id;
         }
 
         /// <summary>
