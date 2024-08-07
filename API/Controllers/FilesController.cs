@@ -50,7 +50,7 @@ namespace Webflow.API.Controllers
             using (var stream = new MemoryStream())
             {
                 await file.CopyToAsync(stream);
-                stream.Position = 0
+                stream.Position = 0;
                 request = service.Files.Create(fileMetadata, stream, file.ContentType);
                 request.Fields = "id";
                 await request.UploadAsync();
