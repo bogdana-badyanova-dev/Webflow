@@ -30,7 +30,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 
             var result = await studentsRepository.DeleteAsync(student, cancellationToken);
 
-            if (result == null)
+            if (!result)
             {
                 response.ErrorMessages.Append(StudentErrorMessages.STUDENT_CANNOT_DELETE);
                 return response;
