@@ -68,8 +68,9 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Implementations
         public async Task<bool> AddAsync(T entity, CancellationToken cancellationToken)
         {
             var result = await _dbSet.AddAsync(entity, cancellationToken);
+            var response = result.State == EntityState.Added;
             await _context.SaveChangesAsync(cancellationToken);
-            return result.State == EntityState.Added;
+            return response;
         }
 
         /// <summary>
@@ -109,9 +110,10 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Implementations
             if (entity == null) return false;
 
             var result = _dbSet.Remove(entity);
+            var response = result.State == EntityState.Modified || result.State == EntityState.Deleted;
             await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-            return result.State == EntityState.Modified || result.State == EntityState.Deleted;
+            return response;
         }
 
         /// <summary>

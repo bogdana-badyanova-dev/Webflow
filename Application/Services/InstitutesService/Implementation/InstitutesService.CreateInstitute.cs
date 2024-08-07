@@ -22,7 +22,7 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
             var institute = mapper.Map<Institute>(request);
             var result = await institutesRepository.AddAsync(institute, cancellationToken);
 
-            if (institute == null) {
+            if (!result) {
                 response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_CANNOT_CREATE);
                 return response;
             }
