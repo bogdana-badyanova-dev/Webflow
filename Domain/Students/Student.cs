@@ -76,6 +76,9 @@ namespace Webflow.Domain.Students
         /// </summary>
         public Institute? Institute { get; set; }
 
+        /// <summary>
+        /// Список курсов студента
+        /// </summary>
         public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 

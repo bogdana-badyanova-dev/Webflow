@@ -109,9 +109,10 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Implementations
             if (entity == null) return false;
 
             var result = _dbSet.Remove(entity);
+            var response = result.State == EntityState.Modified || result.State == EntityState.Deleted;
             await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-            return result.State == EntityState.Modified || result.State == EntityState.Deleted;
+            return response;
         }
 
         /// <summary>
