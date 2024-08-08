@@ -13,8 +13,8 @@ namespace Webflow.Domain.Cources
         public required string Title { get; set; }
 
         /// <summary>
-        /// Дата и время крайнего срока для выполнения элемента курса
+        /// Дата и время выполнения элемента курса
         /// </summary>
-        public DateTime? Deadline { get; set; }
+        public DateTime? CompleteDate { get; set; }
     }
 }
