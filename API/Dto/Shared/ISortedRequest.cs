@@ -1,4 +1,6 @@
-﻿namespace Webflow.Domain.Shared
+﻿using Webflow.Application.Interfaces;
+
+namespace Webflow.Domain.Shared
 {
     /// <summary>
     /// Интерфейс для запроса с параметрами сортировки
@@ -8,7 +10,7 @@
         /// <summary>
         /// Массив полей и направлений сортировки для запроса
         /// </summary>
-        public SortField[] Sort { get; set; }
+        public ISortField[] Sort { get; set; }
     }
 
 }

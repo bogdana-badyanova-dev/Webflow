@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Webflow.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCoursesToStudent : Migration
+    public partial class AddCourcesToStudent : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

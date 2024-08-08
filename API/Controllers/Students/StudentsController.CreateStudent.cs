@@ -15,9 +15,10 @@ namespace Webflow.API.Controllers.Students
         /// <response code="200">Успешный ответ с результатом создания студента</response>
         /// <response code="400">Ошибка при обработке запроса, например, неверные данные</response>
         [HttpPost]
-        public async Task<ActionResult<BaseResponse<string>>> CreateStudent(CreateStudentRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<BaseResponse<string>>> CreateStudent([FromBody] CreateStudentRequest request, CancellationToken cancellationToken) 
         {
             var result = await studentsService.CreateStudent(request, cancellationToken);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

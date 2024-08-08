@@ -75,6 +75,7 @@ namespace Webflow.Domain.Students
         /// Институт, к которому относится студент
         /// </summary>
         public Institute? Institute { get; set; }
+
         /// <summary>
         /// Список курсов студента
         /// </summary>

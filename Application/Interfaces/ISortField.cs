@@ -1,11 +1,11 @@
 ﻿using Webflow.Application.Enums;
 
-namespace Webflow.Domain.Shared
+namespace Webflow.Application.Interfaces
 {
     /// <summary>
-    /// Абстрактный класс, представляющий поле для сортировки
+    /// Интерфейс, представляющий поле для сортировки
     /// </summary>
-    public abstract class SortField
+    public interface ISortField
     {
         /// <summary>
         /// Наименование поля, по которому выполняется сортировка

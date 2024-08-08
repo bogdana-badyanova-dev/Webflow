@@ -2,7 +2,14 @@
 
 namespace Webflow.Domain.Skills
 {
-    public class Skill: MutableEntity<Guid>
+    /// <summary>
+    /// Представляет сущность компетенции.
+    /// </summary>
+    public class Skill : MutableEntity<Guid>
     {
+        /// <summary>
+        /// Наименование компетенции.
+        /// </summary>
+        public string Name { get; set; }
     }
 }

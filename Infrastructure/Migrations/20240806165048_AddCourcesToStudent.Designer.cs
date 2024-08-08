@@ -12,8 +12,8 @@ using Webflow.Infrastructure;
 namespace Webflow.Migrations
 {
     [DbContext(typeof(WebflowContext))]
-    [Migration("20240807210757_AddCoursesToStudent")]
-    partial class AddCoursesToStudent
+    [Migration("20240806165048_AddCourcesToStudent")]
+    partial class AddCourcesToStudent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

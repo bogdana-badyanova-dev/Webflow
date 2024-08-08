@@ -34,7 +34,7 @@ namespace Webflow.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -199,7 +199,7 @@ namespace Webflow.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("Webflow.Domain.Cources.MoodleCourseElement", b =>
@@ -231,10 +231,10 @@ namespace Webflow.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("MoodleCourseElements");
+                    b.ToTable("MoodleCourseElements", (string)null);
                 });
 
-            modelBuilder.Entity("Webflow.Domain.Files.File", b =>
+            modelBuilder.Entity("Webflow.Domain.Files.UploadedFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -243,9 +243,16 @@ namespace Webflow.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("FileId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsProcessed")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("Webflow.Domain.Groups.Group", b =>
@@ -269,7 +276,7 @@ namespace Webflow.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Webflow.Domain.Institutes.Institute", b =>
@@ -287,7 +294,7 @@ namespace Webflow.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Institutes");
+                    b.ToTable("Institutes", (string)null);
                 });
 
             modelBuilder.Entity("Webflow.Domain.Skills.Skill", b =>
@@ -302,6 +309,10 @@ namespace Webflow.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("RemovedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -312,7 +323,7 @@ namespace Webflow.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Skill");
+                    b.ToTable("Skill", (string)null);
                 });
 
             modelBuilder.Entity("Webflow.Domain.Students.Student", b =>
@@ -372,7 +383,7 @@ namespace Webflow.Migrations
 
                     b.HasIndex("InstituteId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("Webflow.Domain.Users.ApplicationUser", b =>
