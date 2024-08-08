@@ -47,12 +47,12 @@ namespace Webflow.API.Controllers.Import
         /// <returns>Результат импорта в формате ExcelImportResult</returns>
         [HttpPost("import")]
         public async Task<ActionResult<ImportResult>> ImportExcelFile(
-            [FromForm] Guid fileId,
-            [FromForm] PlatformEnum platform,
-            [FromForm] IEnumerable<FieldMapping> mappings,
+            Guid fileId,
+            PlatformEnum platform,
+            IEnumerable<FieldMapping> mappings,
             CancellationToken cancellationToken)
         {
-            var strategy = importStrategyFactory.CreateStrategy(platform);
+            var strategy = importStrategyFactory.CreateStrategy(platform,mappings,cancellationToken);
 
             var result = await strategy.Import(fileId, mappings, cancellationToken);
 
