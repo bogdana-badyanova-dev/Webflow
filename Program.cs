@@ -16,6 +16,8 @@ using Webflow.Application.Services.FilesService.Implementations;
 using Webflow.Application.Services.FilesService.Interfaces;
 using Webflow.Application.Services.Identity.Implementations;
 using Webflow.Application.Services.Identity.Interfaces;
+using Webflow.Application.Services.Import.Implementations;
+using Webflow.Application.Services.Import.Interfaces;
 using Webflow.Application.Services.InstitutesService.Implementation;
 using Webflow.Application.Services.InstitutesService.Interfaces;
 using Webflow.Application.Services.StudentsService.Implementations;
@@ -72,6 +74,7 @@ namespace Webflow
             builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
             builder.Services.AddScoped<IStudentsService, StudentsService>();
             builder.Services.AddScoped<IInstitutesService, InstitutesService>();
+            builder.Services.AddScoped<IImportService, ImportService>();
             builder.Services.AddScoped<IInstitutesRepository, InstitutesRepository>();
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<IFactory<ICourse>, CourseFactory>();
