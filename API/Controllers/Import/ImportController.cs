@@ -24,7 +24,7 @@ namespace Webflow.API.Controllers.Import
 
         // TODO Вытащить в сервис всю логику
         [HttpPost("import-preview")]
-        public async Task<ActionResult<BaseResponse<ExcelImportResult>>> ImportPreviewExcelFile(IFormFile file, int previewRowsCount = 5, CancellationToken cancellationToken)
+        public async Task<ActionResult<BaseResponse<ExcelImportResult>>> ImportPreviewExcelFile(IFormFile file, CancellationToken cancellationToken, int previewRowsCount = 5)
         {
             var response = new BaseResponse<ExcelImportResult>
             {
