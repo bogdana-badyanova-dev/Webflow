@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
 using Webflow.API.Dto.Import;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;
 using Webflow.Application.Interfaces;
 using Webflow.Application.Interfaces.Import;
-using Webflow.Application.Services.FilesService.Interfaces;
 using Webflow.Application.Services.Import.Interfaces;
-using Webflow.Application.Services.InstitutesService.Implementation;
 
 namespace Webflow.API.Controllers.Import
 {
@@ -47,9 +44,9 @@ namespace Webflow.API.Controllers.Import
         /// <returns>Результат импорта в формате ExcelImportResult</returns>
         [HttpPost("import")]
         public async Task<ActionResult<ImportResult>> ImportExcelFile(
-            [FromForm] Guid fileId,
-            [FromForm] PlatformEnum platform,
-            [FromForm] IEnumerable<FieldMapping> mappings,
+            Guid fileId,
+            PlatformEnum platform,
+            IEnumerable<FieldMapping> mappings,
             CancellationToken cancellationToken)
         {
             var strategy = importStrategyFactory.CreateStrategy(platform);

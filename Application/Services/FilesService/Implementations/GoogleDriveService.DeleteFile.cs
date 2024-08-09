@@ -28,6 +28,8 @@ namespace Webflow.Application.Services.FilesService.Implementations
                 return response;
             }
 
+            // TODO нештатная ситуация когда в бд файл без id на диске
+
             var googleDriveFileId = file.FileId;
 
             var googleApiConfig = configuration.GetSection("GoogleApi").Get<Dictionary<string, string>>();

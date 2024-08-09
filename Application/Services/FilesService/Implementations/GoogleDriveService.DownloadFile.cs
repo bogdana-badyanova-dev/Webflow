@@ -18,16 +18,18 @@ namespace Webflow.Application.Services.FilesService.Implementations
                 ErrorMessages = new List<string>(),
             };
 
-            var dbFile = await filesRepository.GetByIdAsync(fileId, cancellationToken);
+            var file = await filesRepository.GetByIdAsync(fileId, cancellationToken);
 
-            if (dbFile == null)
+            if (file == null)
             {
                 // TODO
                 response.ErrorMessages.Append("Файл не найден");
                 return response;
             }
 
-            var googleDriveFileId = dbFile.FileId;
+            // TODO нештатная ситуация когда в бд файл без id на диске
+
+            var googleDriveFileId = file.FileId;
 
             var googleApiConfig = configuration.GetSection("GoogleApi").Get<Dictionary<string, string>>();
             var jsonCredentials = JsonConvert.SerializeObject(googleApiConfig);
