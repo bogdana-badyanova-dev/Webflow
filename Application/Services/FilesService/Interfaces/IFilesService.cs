@@ -1,5 +1,5 @@
-﻿using Webflow.API.Dto.Shared;
-using Webflow.Application.Interfaces;
+﻿using Webflow.API.Dto.Import;
+using Webflow.API.Dto.Shared;
 
 namespace Webflow.Application.Services.FilesService.Interfaces
 {

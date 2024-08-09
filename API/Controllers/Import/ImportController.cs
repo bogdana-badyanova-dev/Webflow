@@ -12,10 +12,10 @@ namespace Webflow.API.Controllers.Import
     [ApiController]
     public class ImportController : ControllerBase
     {
-        private readonly IImportStrategyFactory<ImportResult> importStrategyFactory;
+        private readonly IImportStrategyFactory<IImportResult> importStrategyFactory;
         private readonly IImportService importService;
 
-        public ImportController(IImportStrategyFactory<ImportResult> importStrategyFactory, IImportService importService)
+        public ImportController(IImportStrategyFactory<IImportResult> importStrategyFactory, IImportService importService)
         {
             this.importStrategyFactory = importStrategyFactory;
             this.importService = importService;
@@ -43,7 +43,7 @@ namespace Webflow.API.Controllers.Import
         /// <param name="cancellationToken">Токен отмены</param>
         /// <returns>Результат импорта в формате ExcelImportResult</returns>
         [HttpPost("import")]
-        public async Task<ActionResult<ImportResult>> ImportExcelFile(
+        public async Task<ActionResult<IImportResult>> ImportExcelFile(
             Guid fileId,
             PlatformEnum platform,
             IEnumerable<FieldMapping> mappings,

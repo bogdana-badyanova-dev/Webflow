@@ -4,7 +4,7 @@ using Webflow.Application.Interfaces.Import;
 
 namespace Webflow.Application.Helpers
 {
-    public class ImportStrategyFactory : IImportStrategyFactory<ImportResult>
+    public class ImportStrategyFactory : IImportStrategyFactory<IImportResult>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -13,7 +13,7 @@ namespace Webflow.Application.Helpers
             _serviceProvider = serviceProvider;
         }
 
-        public IImportStrategy<ImportResult> CreateStrategy(PlatformEnum source)
+        public IImportStrategy<IImportResult> CreateStrategy(PlatformEnum source)
         {
             return source switch
             {

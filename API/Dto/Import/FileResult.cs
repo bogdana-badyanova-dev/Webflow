@@ -1,4 +1,4 @@
-﻿namespace Webflow.Application.Interfaces
+﻿namespace Webflow.API.Dto.Import
 {
     public class FileResult
     {

@@ -1,6 +1,6 @@
 ﻿namespace Webflow.Application.Interfaces
 {
-    public abstract class ImportResult
+    public interface IImportResult
     {
         public Guid FileId { get; set; }
     }

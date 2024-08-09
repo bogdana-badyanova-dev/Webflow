@@ -2,13 +2,11 @@
 using Webflow.Application.Interfaces;
 using Webflow.API.Dto.Import;
 using OfficeOpenXml;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace Webflow.Application.Helpers
 {
     public abstract class BaseImportStrategy<T, K> : IImportStrategy<T>
-    where T : ImportResult
+    where T : IImportResult
     where K : class, new()
     {
         public abstract Task<T> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken);

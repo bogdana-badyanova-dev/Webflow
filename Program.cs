@@ -82,7 +82,7 @@ namespace Webflow
             builder.Services.AddScoped<MoodleImportStrategy>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
-            builder.Services.AddScoped<IImportStrategyFactory<ImportResult>, ImportStrategyFactory>();
+            builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 
