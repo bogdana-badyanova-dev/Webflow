@@ -12,13 +12,13 @@ namespace Webflow.API.Dto.Students
         /// Имя студента
         /// </summary>
         [DefaultValue("Sasha")]
-        new public required string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         /// <summary>
         /// Фамилия студента
         /// </summary>
         [DefaultValue("Gray")]
-        new public required string LastName { get; set; }
+        public required string LastName { get; set; }
 
         /// <summary>
         /// Отчество студента
@@ -31,7 +31,7 @@ namespace Webflow.API.Dto.Students
         /// </summary>
         [DefaultValue("example@gmail.com")]
 
-        new public required string Email { get; set; }
+        public required string Email { get; set; }
         /// <summary>
         /// Дата рождения студента
         /// </summary>

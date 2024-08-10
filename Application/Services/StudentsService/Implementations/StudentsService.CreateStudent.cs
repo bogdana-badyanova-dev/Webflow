@@ -19,7 +19,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 
             var result = await studentsRepository.AddAsync(student, cancellationToken);
 
-            if (!result)
+            if (result == Guid.Empty)
             {
                 response.ErrorMessages.Append(StudentErrorMessages.STUDENT_CANNOT_CREATE);
                 return response;

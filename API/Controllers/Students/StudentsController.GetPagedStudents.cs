@@ -16,7 +16,7 @@ namespace Webflow.API.Controllers.Students
         /// <response code="200">Успешный ответ с данными о студентах</response>
         /// <response code="400">Ошибка при обработке запроса, например, неверные параметры</response>
         [HttpPost("paged-students")]
-        public async Task<ActionResult<BaseResponse<PaginatedResponse<StudentViewDto>>>> GetPagedStudent(GetPagedStudentsRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<BaseResponse<PaginatedResponse<StudentViewDto>>>> GetPagedStudent([FromBody] GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
             var result = await studentsService.GetPagedStudents(request, cancellationToken);
 

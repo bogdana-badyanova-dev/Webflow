@@ -22,14 +22,14 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
             var institute = mapper.Map<Institute>(request);
             var result = await institutesRepository.AddAsync(institute, cancellationToken);
 
-            if (!result) {
+            if (result == Guid.Empty) {
                 response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_CANNOT_CREATE);
                 return response;
             }
 
             response.IsSuccess = true;
             response.Data = mapper.Map<InstituteViewDto>(institute);
-            response.Data.CreatedAt = DateTime.UtcNow;
+
             return response;
         }
     }

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="EPPlus" Version="7.2.2" />
     <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3490" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
@@ -38,7 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Files\" />
+    <Folder Include="Application\Services\Import\Implementations\" />
+    <Folder Include="Application\Services\Import\Interfaces\" />
 	<Folder Include="Domain\CourseResults\" />
 	<Folder Include="Domain\Attendance\" />
 	<Folder Include="Domain\CourseResults\" />
