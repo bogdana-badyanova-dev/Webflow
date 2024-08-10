@@ -9,6 +9,7 @@ namespace Webflow.Application.Helpers
         public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken)
         {
             var file = await filesService.DownloadFile(fileId, cancellationToken);
+
             var response = new MoodleImportResult
             {
                 FileId = fileId

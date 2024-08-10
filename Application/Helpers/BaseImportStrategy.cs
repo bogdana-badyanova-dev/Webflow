@@ -2,6 +2,8 @@
 using Webflow.Application.Interfaces;
 using Webflow.API.Dto.Import;
 using OfficeOpenXml;
+using System.Collections;
+using System.Reflection;
 
 namespace Webflow.Application.Helpers
 {
@@ -45,12 +47,28 @@ namespace Webflow.Application.Helpers
 
                         int modelFieldIndex = modelField.Index;
 
-                        if (!mappingIndexes.ContainsKey(modelFieldIndex))
-                        {
-                            mappingIndexes[modelFieldIndex] = new List<int>();
-                        }
+                        // Получаем информацию о свойстве модели
+                        var propertyInfo = typeof(K).GetProperty(modelField.Name);
 
-                        mappingIndexes[modelFieldIndex].Add(col);
+                        // Проверяем, является ли это поле IEnumerable
+                        if (propertyInfo != null && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string))
+                        {
+                            // Если поле является IEnumerable, добавляем его в mappingIndexes как список столбцов
+                            if (!mappingIndexes.ContainsKey(modelFieldIndex))
+                            {
+                                mappingIndexes[modelFieldIndex] = new List<int>();
+                            }
+
+                            mappingIndexes[modelFieldIndex].Add(col);
+                        }
+                        else
+                        {
+                            // Если поле не является IEnumerable, добавляем только первый соответствующий столбец
+                            if (!mappingIndexes.ContainsKey(modelFieldIndex))
+                            {
+                                mappingIndexes[modelFieldIndex] = new List<int> { col };
+                            }
+                        }
                     }
 
                     for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
@@ -69,8 +87,7 @@ namespace Webflow.Application.Helpers
                             foreach (var col in columns)
                             {
                                 var cellValue = worksheet.Cells[row, col].Text;
-                                object value = Convert.ChangeType(cellValue, propertyInfo.PropertyType);
-                                propertyInfo.SetValue(model, value);
+                                SetPropertyValue(model, propertyInfo, cellValue);
                             }
                         }
 
@@ -81,6 +98,47 @@ namespace Webflow.Application.Helpers
             }
 
             return data;
+        }
+
+
+        private void SetPropertyValue(object model, PropertyInfo propertyInfo, string cellValue)
+        {
+            // Проверяем, является ли поле IEnumerable (но не строкой)
+            if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string))
+            {
+                // Получаем тип элементов внутри IEnumerable
+                var elementType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
+
+                if (elementType != null)
+                {
+                    // Создаем экземпляр коллекции
+                    var listType = typeof(List<>).MakeGenericType(elementType);
+                    var list = (IList)Activator.CreateInstance(listType);
+
+                    // Преобразуем значение ячейки в нужный тип и добавляем в коллекцию
+                    object value = Convert.ChangeType(cellValue, elementType);
+                    list.Add(value);
+
+                    // Добавляем существующие значения, если они уже есть в модели
+                    var existingValue = propertyInfo.GetValue(model) as IList;
+                    if (existingValue != null)
+                    {
+                        foreach (var item in existingValue)
+                        {
+                            list.Add(item);
+                        }
+                    }
+
+                    // Устанавливаем заполненную коллекцию в свойство модели
+                    propertyInfo.SetValue(model, list);
+                }
+            }
+            else
+            {
+                // Если поле не является IEnumerable, просто устанавливаем значение
+                object value = Convert.ChangeType(cellValue, propertyInfo.PropertyType);
+                propertyInfo.SetValue(model, value);
+            }
         }
     }
 }
