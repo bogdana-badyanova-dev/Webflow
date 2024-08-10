@@ -2,7 +2,7 @@
 
 namespace Webflow.Application.Interfaces.Import
 {
-    public class InnopolisImportResult : BaseImportResult<InnopolisImport>
+    public class MoodleImportResult : BaseImportResult<MoodleImport>
     {
     }
 }
