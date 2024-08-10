@@ -26,7 +26,7 @@ namespace Webflow.Application.Helpers
                         throw new Exception();
                     }
 
-                    var modelFields = typeof(InnopolisImport).GetProperties()
+                    var modelFields = typeof(K).GetProperties()
                         .Select((prop, index) => new { prop.Name, Index = index })
                         .ToList();
 

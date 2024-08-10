@@ -1,13 +1,15 @@
 ﻿using Webflow.API.Dto.Import;
 using Webflow.Application.Interfaces;
+using Webflow.Application.Services.FilesService.Interfaces;
 
 namespace Webflow.Application.Helpers
 {
-    public class MoodleImportStrategy : BaseImportStrategy<IImportResult, MoodleImport>
+    public partial class MoodleImportStrategy : BaseImportStrategy<IImportResult, MoodleImport>
     {
-        public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken)
+        private readonly IFilesService filesService;
+        public MoodleImportStrategy(IFilesService filesService)
         {
-            throw new NotImplementedException("Тут надо разруливать импорта из мудла");
+            this.filesService = filesService;
         }
     }
 }
