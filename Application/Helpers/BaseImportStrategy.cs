@@ -87,7 +87,8 @@ namespace Webflow.Application.Helpers
                             foreach (var col in columns)
                             {
                                 var cellValue = worksheet.Cells[row, col].Text;
-                                SetPropertyValue(model, propertyInfo, cellValue);
+                                var header = worksheet.Cells[1, col].Text;
+                                SetPropertyValue(model, propertyInfo, cellValue, header);
                             }
                         }
 
@@ -100,8 +101,27 @@ namespace Webflow.Application.Helpers
             return data;
         }
 
+        protected virtual void SetPropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
+        {
+            bool isEnumerableProperty = typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string);
 
-        private void SetPropertyValue(object model, PropertyInfo propertyInfo, string cellValue)
+            if (isEnumerableProperty)
+            {
+                SetIEnumerablePropertyValue(model, propertyInfo, cellValue, courseElementName);
+            }
+            else
+            {
+                SetSimplePropertyValue(model, propertyInfo, cellValue);
+            }
+        }
+
+        protected virtual void SetSimplePropertyValue(K model, PropertyInfo propertyInfo, string cellValue)
+        {
+            object value = Convert.ChangeType(cellValue, propertyInfo.PropertyType);
+            propertyInfo.SetValue(model, value);
+        }
+
+        protected virtual void SetIEnumerablePropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
             // Проверяем, является ли поле IEnumerable (но не строкой)
             if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string))
@@ -132,12 +152,6 @@ namespace Webflow.Application.Helpers
                     // Устанавливаем заполненную коллекцию в свойство модели
                     propertyInfo.SetValue(model, list);
                 }
-            }
-            else
-            {
-                // Если поле не является IEnumerable, просто устанавливаем значение
-                object value = Convert.ChangeType(cellValue, propertyInfo.PropertyType);
-                propertyInfo.SetValue(model, value);
             }
         }
     }
