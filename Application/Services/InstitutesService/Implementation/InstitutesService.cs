@@ -2,6 +2,7 @@
 using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Services.InstitutesService.Interfaces;
+using Webflow.Application.Services.NotificationsService.Interfaces;
 using Webflow.Infrastructure.Repositories.InstitutesRepository.Interfaces;
 using Webflow.Infrastructure.Repositories.StudentsRepository.Interfaces;
 
@@ -17,10 +18,12 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
     {
         private readonly IInstitutesRepository institutesRepository;
         private readonly IMapper mapper;
-        public InstitutesService(IMapper mapper, IInstitutesRepository institutesRepository)
+        private readonly INotificationService notificationService;
+        public InstitutesService(IMapper mapper, IInstitutesRepository institutesRepository, INotificationService notificationService)
         {
             this.mapper = mapper;
             this.institutesRepository = institutesRepository;
+            this.notificationService = notificationService;
         }
     }
 }

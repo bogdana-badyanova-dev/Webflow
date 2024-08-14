@@ -1,11 +1,10 @@
+using Google.Apis.Drive.v3.Data;
 using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
-using Webflow.API.Dto.Students;
+using Webflow.Application.Enums;
 using Webflow.Application.Messages.ErrorMessages.Students;
-using Webflow.Application.Messages.SuccessefulMessages.Students;
 using Webflow.Application.Services.InstitutesService.Interfaces;
 using Webflow.Domain.Institutes;
-using Webflow.Domain.Students;
 
 namespace Webflow.Application.Services.InstitutesService.Implementation
 {
@@ -29,6 +28,9 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 
             response.IsSuccess = true;
             response.Data = mapper.Map<InstituteViewDto>(institute);
+
+            var notificationMessage = $"Институт '{institute.Name}' был успешно создан.";
+            await notificationService.SendNotificationAsync(NotificationType.Success,notificationMessage);
 
             return response;
         }

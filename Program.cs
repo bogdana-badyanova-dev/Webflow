@@ -6,10 +6,12 @@ using Microsoft.OpenApi.Models;
 using OfficeOpenXml;
 using System.Reflection;
 using System.Text;
+using Webflow.API.Hubs;
 using Webflow.Application.Helpers;
 using Webflow.Application.Interfaces;
 using Webflow.Application.Interfaces.Courses;
 using Webflow.Application.Interfaces.Import;
+using Webflow.Application.Interfaces.Notifications;
 using Webflow.Application.Services.AuthService.Implementations;
 using Webflow.Application.Services.AuthService.Interfaces;
 using Webflow.Application.Services.FilesService.Implementations;
@@ -20,6 +22,8 @@ using Webflow.Application.Services.Import.Implementations;
 using Webflow.Application.Services.Import.Interfaces;
 using Webflow.Application.Services.InstitutesService.Implementation;
 using Webflow.Application.Services.InstitutesService.Interfaces;
+using Webflow.Application.Services.NotificationsService.Implementations;
+using Webflow.Application.Services.NotificationsService.Interfaces;
 using Webflow.Application.Services.StudentsService.Implementations;
 using Webflow.Application.Services.StudentsService.Interfaces;
 using Webflow.Domain.Users;
@@ -69,6 +73,8 @@ namespace Webflow
                 };
             });
 
+            builder.Services.AddSignalR();
+
             builder.Services.AddScoped<IFilesService, GoogleDriveService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
             builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
@@ -83,6 +89,9 @@ namespace Webflow
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddSingleton<INotificationFactory, NotificationFactory>();
+
 
             builder.Services.AddAutoMapper(typeof(Program));
 
@@ -121,13 +130,19 @@ namespace Webflow
                 app.UseSwaggerUI();
             }
 
+            app.UseRouting();
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+            });
 
             app.Run();
         }
