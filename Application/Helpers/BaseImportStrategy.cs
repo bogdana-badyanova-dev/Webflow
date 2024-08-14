@@ -103,7 +103,7 @@ namespace Webflow.Application.Helpers
 
         protected virtual void SetPropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
-            bool isEnumerableProperty = typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string);
+            bool isEnumerableProperty = typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType);
 
             if (isEnumerableProperty)
             {
@@ -123,9 +123,6 @@ namespace Webflow.Application.Helpers
 
         protected virtual void SetIEnumerablePropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
-            // Проверяем, является ли поле IEnumerable (но не строкой)
-            if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string))
-            {
                 // Получаем тип элементов внутри IEnumerable
                 var elementType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
 
@@ -152,7 +149,6 @@ namespace Webflow.Application.Helpers
                     // Устанавливаем заполненную коллекцию в свойство модели
                     propertyInfo.SetValue(model, list);
                 }
-            }
         }
     }
 }
