@@ -3,7 +3,6 @@ using Webflow.API.Dto.Import;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;
 using Webflow.Application.Interfaces;
-using Webflow.Application.Interfaces.Import;
 using Webflow.Application.Services.Import.Interfaces;
 
 namespace Webflow.API.Controllers.Import
@@ -12,12 +11,10 @@ namespace Webflow.API.Controllers.Import
     [ApiController]
     public class ImportController : ControllerBase
     {
-        private readonly IImportStrategyFactory<IImportResult> importStrategyFactory;
         private readonly IImportService importService;
 
-        public ImportController(IImportStrategyFactory<IImportResult> importStrategyFactory, IImportService importService)
+        public ImportController(IImportService importService)
         {
-            this.importStrategyFactory = importStrategyFactory;
             this.importService = importService;
         }
 
@@ -49,9 +46,12 @@ namespace Webflow.API.Controllers.Import
             IEnumerable<FieldMapping> mappings,
             CancellationToken cancellationToken)
         {
-            var strategy = importStrategyFactory.CreateStrategy(platform);
+            var result = await importService.ImportExcelFile(fileId, platform, mappings, cancellationToken);
 
-            var result = await strategy.Import(fileId, mappings, cancellationToken);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
 
             return Ok(result);
         }
