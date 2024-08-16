@@ -77,15 +77,7 @@ namespace Webflow
 
             builder.Services.AddSignalR();
 
-            builder.Services.AddSingleton(sp =>
-            {
-                return new ConnectionFactory()
-                {
-                    HostName = "localhost",
-                };
-            });
-
-            builder.Services.AddHostedService<RabbitMQBackgroundService>();
+           
             builder.Services.AddScoped<IFilesService, GoogleDriveService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
             builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
@@ -101,7 +93,17 @@ namespace Webflow
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
-            builder.Services.AddSingleton<INotificationFactory, NotificationFactory>();
+            builder.Services.AddScoped<INotificationFactory, NotificationFactory>();
+
+            builder.Services.AddSingleton(sp =>
+            {
+                return new ConnectionFactory()
+                {
+                    HostName = "localhost",
+                };
+            });
+
+            builder.Services.AddSingleton<IHostedService, RabbitMQBackgroundService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

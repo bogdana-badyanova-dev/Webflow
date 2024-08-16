@@ -1,17 +1,21 @@
 ﻿using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Webflow.API.Dto.Import;
 using Webflow.Application.Enums;
+using Webflow.Application.Services.NotificationsService.Interfaces;
 
 public class RabbitMQBackgroundService : BackgroundService
 {
-    private readonly ConnectionFactory _factory;
+    private readonly ConnectionFactory factory;
+    private readonly IServiceProvider serviceProvider;
 
-    public RabbitMQBackgroundService(ConnectionFactory factory)
+    public RabbitMQBackgroundService(ConnectionFactory factory, IServiceProvider serviceProvider)
     {
-        _factory = factory;
+        this.factory = factory;
+        this.serviceProvider = serviceProvider;
     }
 
     public class ImportMessage
@@ -21,11 +25,11 @@ public class RabbitMQBackgroundService : BackgroundService
         public IEnumerable<FieldMapping> Mappings { get; set; }
     }
 
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        return Task.Run(() =>
+        await Task.Run(() =>
         {
-            using (var connection = _factory.CreateConnection())
+            using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(queue: "hello",
@@ -35,12 +39,19 @@ public class RabbitMQBackgroundService : BackgroundService
                                      arguments: null);
 
                 var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += (model, ea) =>
+                consumer.Received += async (model, ea) =>
                 {
                     var body = ea.Body.ToArray();
+
                     var message = Encoding.UTF8.GetString(body);
 
                     var data = JsonConvert.DeserializeObject<ImportMessage>(message);
+
+                    using (var scope = serviceProvider.CreateScope())
+                    {
+                        var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
+                        await notificationService.SendNotificationAsync(NotificationType.Object, null, data);
+                    }
 
                     Console.WriteLine($"[x] Received message: {data}");
                 };
@@ -56,4 +67,5 @@ public class RabbitMQBackgroundService : BackgroundService
             }
         }, stoppingToken);
     }
+
 }
