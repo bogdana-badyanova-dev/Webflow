@@ -15,23 +15,22 @@ namespace Webflow.API.Controllers.Files
     public partial class FilesController : ControllerBase
     {
         private readonly IFilesService filesService;
-        private readonly ConnectionFactory _factory;
+        private readonly ConnectionFactory factory;
 
         /// <summary>
         /// Конструктор контроллера для работы с файлами
         /// </summary>
         /// <param name="filesService">Сервис для работы с файлами</param>
-        public FilesController(IFilesService filesService)
+        public FilesController(IFilesService filesService, ConnectionFactory factory)
         {
             this.filesService = filesService;
-            _factory = new ConnectionFactory() { HostName = "localhost" };
+            this.factory = factory;
         }
 
-        // POST api/rabbitmq/send
         [HttpPost("send")]
         public IActionResult SendMessage([FromBody] string message)
         {
-            using (var connection = _factory.CreateConnection())
+            using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(queue: "hello",
@@ -48,42 +47,6 @@ namespace Webflow.API.Controllers.Files
                                      body: body);
 
                 return Ok(new { Message = "Message sent", Content = message });
-            }
-        }
-
-        // GET api/rabbitmq/receive
-        [HttpGet("receive")]
-        public IActionResult ReceiveMessage()
-        {
-            using (var connection = _factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: "hello",
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
-
-                var consumer = new EventingBasicConsumer(channel);
-                string message = null;
-
-                consumer.Received += (model, ea) =>
-                {
-                    var body = ea.Body.ToArray();
-                    message = Encoding.UTF8.GetString(body);
-                };
-
-                channel.BasicConsume(queue: "hello",
-                                     autoAck: true,
-                                     consumer: consumer);
-
-                // Немного подождем, пока сообщение будет получено
-                System.Threading.Thread.Sleep(5000);
-
-                if (message == null)
-                    return NotFound(new { Message = "No messages in queue" });
-
-                return Ok(new { Message = "Message received", Content = message });
             }
         }
     }

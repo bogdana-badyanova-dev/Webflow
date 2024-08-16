@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OfficeOpenXml;
+using RabbitMQ.Client;
+using System.Text;
 using Webflow.API.Dto.Import;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;
@@ -17,12 +20,14 @@ namespace Webflow.Application.Services.Import.Implementations
         private readonly IImportStrategyFactory<IImportResult> importStrategyFactory;
         private readonly IFilesService filesService;
         private readonly INotificationService notificationService;
+        private readonly ConnectionFactory factory;
 
-        public ImportService(IImportStrategyFactory<IImportResult> importStrategyFactory, IFilesService filesService, INotificationService notificationService)
+        public ImportService(IImportStrategyFactory<IImportResult> importStrategyFactory, IFilesService filesService, INotificationService notificationService, ConnectionFactory factory)
         {
             this.importStrategyFactory = importStrategyFactory;
             this.filesService = filesService;
             this.notificationService = notificationService;
+            this.factory = factory;
         }
 
         public async Task<BaseResponse<ExcelImportResult>> ImportPreviewExcelFile(IFormFile file, CancellationToken cancellationToken, int previewRowsCount = 5)
@@ -95,18 +100,50 @@ namespace Webflow.Application.Services.Import.Implementations
             IEnumerable<FieldMapping> mappings,
             CancellationToken cancellationToken)
         {
-            var strategy = importStrategyFactory.CreateStrategy(platform);
-
-            var result = await strategy.Import(fileId, mappings, cancellationToken);
-
-            await notificationService.SendNotificationAsync(NotificationType.Object,null, result);
-
-            // TODO тут по итогу должна валидироваться и сохраняться инфа по тем моделям импорта, что мы получили
-            return new BaseResponse<IImportResult>()
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
             {
-                IsSuccess = true,
-                Data = result
-            };
+                channel.QueueDeclare(queue: "hello",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+
+                var messageObject = new
+                {
+                    FileId = fileId,
+                    Platform = platform,
+                    Mappings = mappings,
+                    CancellationToken = cancellationToken.IsCancellationRequested
+                };
+
+                var data = JsonConvert.SerializeObject(messageObject);
+
+                var body = Encoding.UTF8.GetBytes(data);
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: "hello",
+                                     basicProperties: null,
+                                     body: body);
+
+                return new BaseResponse<IImportResult>()
+                {
+                    IsSuccess = true,
+                    Data = null
+                };
+            }
+            //var strategy = importStrategyFactory.CreateStrategy(platform);
+
+            //var result = await strategy.Import(fileId, mappings, cancellationToken);
+
+            //await notificationService.SendNotificationAsync(NotificationType.Object,null, result);
+
+            //// TODO тут по итогу должна валидироваться и сохраняться инфа по тем моделям импорта, что мы получили
+            //return new BaseResponse<IImportResult>()
+            //{
+            //    IsSuccess = true,
+            //    Data = result
+            //};
         }
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OfficeOpenXml;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System.Reflection;
 using System.Text;
 using Webflow.API.Hubs;
@@ -75,6 +77,15 @@ namespace Webflow
 
             builder.Services.AddSignalR();
 
+            builder.Services.AddSingleton(sp =>
+            {
+                return new ConnectionFactory()
+                {
+                    HostName = "localhost",
+                };
+            });
+
+            builder.Services.AddHostedService<RabbitMQBackgroundService>();
             builder.Services.AddScoped<IFilesService, GoogleDriveService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
             builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
@@ -91,7 +102,6 @@ namespace Webflow
             builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddSingleton<INotificationFactory, NotificationFactory>();
-
 
             builder.Services.AddAutoMapper(typeof(Program));
 
