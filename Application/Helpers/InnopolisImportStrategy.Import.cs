@@ -6,7 +6,7 @@ namespace Webflow.Application.Helpers
 {
     public partial class InnopolisImportStrategy : BaseImportStrategy<IImportResult, InnopolisImport>
     {
-        public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken)
+        public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken = default)
         {
             var file = await filesService.DownloadFile(fileId, cancellationToken);
             var response = new InnopolisImportResult

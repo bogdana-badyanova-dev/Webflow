@@ -8,7 +8,7 @@ namespace Webflow.Application.Helpers
 {
     public partial class MoodleImportStrategy : BaseImportStrategy<IImportResult, MoodleImport>
     {
-        public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken)
+        public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken = default)
         {
             var file = await filesService.DownloadFile(fileId, cancellationToken);
 

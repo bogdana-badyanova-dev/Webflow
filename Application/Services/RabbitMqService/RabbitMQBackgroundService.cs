@@ -1,11 +1,16 @@
 ﻿using System.Text;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Webflow.API.Dto.Import;
 using Webflow.Application.Enums;
+using Webflow.Application.Helpers;
+using Webflow.Application.Interfaces.Import;
+using Webflow.Application.Interfaces;
 using Webflow.Application.Services.NotificationsService.Interfaces;
+using System.Threading;
 
 public class RabbitMQBackgroundService : BackgroundService
 {
@@ -49,8 +54,12 @@ public class RabbitMQBackgroundService : BackgroundService
 
                     using (var scope = serviceProvider.CreateScope())
                     {
+                        var importStrategyFactory = scope.ServiceProvider.GetRequiredService<IImportStrategyFactory<IImportResult>>();
+                        var strategy = importStrategyFactory.CreateStrategy(data.Platform);
+                        var result = await strategy.Import(data.FileId, data.Mappings);
+
                         var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
-                        await notificationService.SendNotificationAsync(NotificationType.Object, null, data);
+                        await notificationService.SendNotificationAsync(NotificationType.Object, null, result);
                     }
 
                     Console.WriteLine($"[x] Received message: {data}");
