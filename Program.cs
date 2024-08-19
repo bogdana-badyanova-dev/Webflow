@@ -8,6 +8,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Reflection;
 using System.Text;
+using Webflow.API.Dto.Import;
 using Webflow.API.Hubs;
 using Webflow.Application.Helpers;
 using Webflow.Application.Interfaces;
@@ -28,6 +29,7 @@ using Webflow.Application.Services.NotificationsService.Implementations;
 using Webflow.Application.Services.NotificationsService.Interfaces;
 using Webflow.Application.Services.StudentsService.Implementations;
 using Webflow.Application.Services.StudentsService.Interfaces;
+using Webflow.Domain.Files;
 using Webflow.Domain.Users;
 using Webflow.Infrastructure;
 using Webflow.Infrastructure.Repositories.BaseRepository.Implementations;
@@ -76,25 +78,22 @@ namespace Webflow
             });
 
             builder.Services.AddSignalR();
-
-           
             builder.Services.AddScoped<IFilesService, GoogleDriveService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
-            builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
+            builder.Services.AddScoped<IBaseRepository<UploadedFile>, BaseRepository<UploadedFile>>();
             builder.Services.AddScoped<IStudentsService, StudentsService>();
             builder.Services.AddScoped<IInstitutesService, InstitutesService>();
             builder.Services.AddScoped<IImportService, ImportService>();
             builder.Services.AddScoped<IInstitutesRepository, InstitutesRepository>();
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<IFactory<ICourse>, CourseFactory>();
-            builder.Services.AddScoped<InnopolisImportStrategy>();
-            builder.Services.AddScoped<MoodleImportStrategy>();
+            builder.Services.AddScoped<BaseImportStrategy<IImportResult, InnopolisImport>, InnopolisImportStrategy>();
+            builder.Services.AddScoped<BaseImportStrategy < IImportResult, MoodleImport >, MoodleImportStrategy >();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<INotificationFactory, NotificationFactory>();
-
             builder.Services.AddSingleton(sp =>
             {
                 return new ConnectionFactory()
@@ -119,8 +118,6 @@ namespace Webflow
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "WebFlow API", Version = "v1" });
-
-                // Добавление XML-файла документации
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 option.IncludeXmlComments(xmlPath);

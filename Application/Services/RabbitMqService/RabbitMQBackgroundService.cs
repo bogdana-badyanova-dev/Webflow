@@ -34,47 +34,53 @@ public class RabbitMQBackgroundService : BackgroundService
     {
         await Task.Run(() =>
         {
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            try
             {
-                channel.QueueDeclare(queue: "hello",
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
-
-                var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += async (model, ea) =>
+                using (var connection = factory.CreateConnection())
+                using (var channel = connection.CreateModel())
                 {
-                    var body = ea.Body.ToArray();
+                    channel.QueueDeclare(queue: "hello",
+                                         durable: false,
+                                         exclusive: false,
+                                         autoDelete: false,
+                                         arguments: null);
 
-                    var message = Encoding.UTF8.GetString(body);
-
-                    var data = JsonConvert.DeserializeObject<ImportMessage>(message);
-
-                    using (var scope = serviceProvider.CreateScope())
+                    var consumer = new EventingBasicConsumer(channel);
+                    consumer.Received += async (model, ea) =>
                     {
-                        var importStrategyFactory = scope.ServiceProvider.GetRequiredService<IImportStrategyFactory<IImportResult>>();
-                        var strategy = importStrategyFactory.CreateStrategy(data.Platform);
-                        var result = await strategy.Import(data.FileId, data.Mappings);
+                        var body = ea.Body.ToArray();
 
-                        var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
-                        await notificationService.SendNotificationAsync(NotificationType.Object, null, result);
+                        var message = Encoding.UTF8.GetString(body);
+
+                        var data = JsonConvert.DeserializeObject<ImportMessage>(message);
+
+                        using (var scope = serviceProvider.CreateScope())
+                        {
+                            var importStrategyFactory = scope.ServiceProvider.GetRequiredService<IImportStrategyFactory<IImportResult>>();
+                            var strategy = importStrategyFactory.CreateStrategy(data.Platform);
+                            var result = await strategy.Import(data.FileId, data.Mappings);
+
+                            var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
+                            await notificationService.SendNotificationAsync(NotificationType.Object, null, result);
+                        }
+
+                        Console.WriteLine($"[x] Received message: {data}");
+                    };
+
+                    channel.BasicConsume(queue: "hello",
+                                         autoAck: true,
+                                         consumer: consumer);
+
+                    while (!stoppingToken.IsCancellationRequested)
+                    {
+                        Thread.Sleep(1000);
                     }
-
-                    Console.WriteLine($"[x] Received message: {data}");
-                };
-
-                channel.BasicConsume(queue: "hello",
-                                     autoAck: true,
-                                     consumer: consumer);
-
-                while (!stoppingToken.IsCancellationRequested)
-                {
-                    Thread.Sleep(1000);
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error connecting to RabbitMQ: {ex.Message}");
             }
         }, stoppingToken);
     }
-
 }
