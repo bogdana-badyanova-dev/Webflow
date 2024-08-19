@@ -1,11 +1,9 @@
 using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
-using Webflow.API.Dto.Students;
+using Webflow.Application.Enums;
 using Webflow.Application.Messages.ErrorMessages.Students;
-using Webflow.Application.Messages.SuccessefulMessages.Students;
 using Webflow.Application.Services.InstitutesService.Interfaces;
 using Webflow.Domain.Institutes;
-using Webflow.Domain.Students;
 
 namespace Webflow.Application.Services.InstitutesService.Implementation
 {
@@ -22,14 +20,17 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
             var institute = mapper.Map<Institute>(request);
             var result = await institutesRepository.AddAsync(institute, cancellationToken);
 
-            if (!result) {
+            if (result == Guid.Empty) {
                 response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_CANNOT_CREATE);
                 return response;
             }
 
             response.IsSuccess = true;
             response.Data = mapper.Map<InstituteViewDto>(institute);
-            response.Data.CreatedAt = DateTime.UtcNow;
+
+            var notificationMessage = $"Институт '{institute.Name}' был успешно создан.";
+            await notificationService.SendNotificationAsync(NotificationType.Success,notificationMessage);
+
             return response;
         }
     }

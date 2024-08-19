@@ -13,7 +13,6 @@ namespace Webflow.API.Controllers.Students
         /// <returns>Ответ, содержащий результат операции удаления</returns>
         /// <response code="200">Успешный ответ с результатом удаления</response>
         /// <response code="400">Ошибка при обработке запроса, например, неверный идентификатор</response>
-        
         [HttpDelete("soft-delete/{id}")]
         public async Task<ActionResult<BaseResponse<string>>> SoftDeleteStudent(Guid? id, CancellationToken cancellationToken) 
         {

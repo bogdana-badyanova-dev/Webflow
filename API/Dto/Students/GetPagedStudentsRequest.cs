@@ -1,5 +1,6 @@
 ﻿using Webflow.Domain.Shared;
 using System.ComponentModel;
+using Webflow.Application.Interfaces;
 
 namespace Webflow.API.Dto.Students
 {
@@ -41,7 +42,7 @@ namespace Webflow.API.Dto.Students
         /// <summary>
         /// Список полей для сортировки и направление сортировки
         /// </summary>
-        public SortField[] Sort { get; set; } = [];
+        public ISortField[] Sort { get; set; } = [];
     }
 
 }

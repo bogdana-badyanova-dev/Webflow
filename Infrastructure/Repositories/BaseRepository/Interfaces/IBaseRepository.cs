@@ -38,7 +38,7 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="entity">Добавляемая сущность</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>True, если сущность успешно добавлена, иначе false</returns>
-        Task<bool> AddAsync(T entity, CancellationToken cancellationToken);
+        Task<Guid> AddAsync(T entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет несколько сущностей в репозиторий

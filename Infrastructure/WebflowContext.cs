@@ -6,6 +6,7 @@ using Webflow.Domain.Cources;
 using Webflow.Domain.Skills;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Webflow.Domain.Users;
+using Webflow.Domain.Files;
 
 namespace Webflow.Infrastructure
 {
@@ -37,7 +38,7 @@ namespace Webflow.Infrastructure
         /// <summary>
         /// Представление таблицы файлов в базе данных
         /// </summary>
-        public DbSet<Domain.Files.File> Files { get; set; } = default!;
+        public DbSet<UploadedFile> Files { get; set; } = default!;
 
         /// <summary>
         /// Представление таблицы студентов в базе данных

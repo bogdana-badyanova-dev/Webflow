@@ -3,18 +3,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OfficeOpenXml;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System.Reflection;
 using System.Text;
+using Webflow.API.Hubs;
 using Webflow.Application.Helpers;
 using Webflow.Application.Interfaces;
+using Webflow.Application.Interfaces.Courses;
+using Webflow.Application.Interfaces.Import;
+using Webflow.Application.Interfaces.Notifications;
 using Webflow.Application.Services.AuthService.Implementations;
 using Webflow.Application.Services.AuthService.Interfaces;
 using Webflow.Application.Services.FilesService.Implementations;
 using Webflow.Application.Services.FilesService.Interfaces;
 using Webflow.Application.Services.Identity.Implementations;
 using Webflow.Application.Services.Identity.Interfaces;
+using Webflow.Application.Services.Import.Implementations;
+using Webflow.Application.Services.Import.Interfaces;
 using Webflow.Application.Services.InstitutesService.Implementation;
 using Webflow.Application.Services.InstitutesService.Interfaces;
+using Webflow.Application.Services.NotificationsService.Implementations;
+using Webflow.Application.Services.NotificationsService.Interfaces;
 using Webflow.Application.Services.StudentsService.Implementations;
 using Webflow.Application.Services.StudentsService.Interfaces;
 using Webflow.Domain.Users;
@@ -34,6 +45,8 @@ namespace Webflow
     {
         public static void Main(string[] args)
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<WebflowContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("WebflowContext") ?? throw new InvalidOperationException("Connection string 'WebflowContext' not found.")));
@@ -62,16 +75,35 @@ namespace Webflow
                 };
             });
 
-            builder.Services.AddScoped<IFilesService, FilesService>();
+            builder.Services.AddSignalR();
+
+           
+            builder.Services.AddScoped<IFilesService, GoogleDriveService>();
             builder.Services.AddScoped<IFilesRepository, FilesRepository>();
-            builder.Services.AddScoped<IBaseRepository<Domain.Files.File>, BaseRepository<Domain.Files.File>>();
+            builder.Services.AddScoped<IBaseRepository<Domain.Files.UploadedFile>, BaseRepository<Domain.Files.UploadedFile>>();
             builder.Services.AddScoped<IStudentsService, StudentsService>();
             builder.Services.AddScoped<IInstitutesService, InstitutesService>();
+            builder.Services.AddScoped<IImportService, ImportService>();
             builder.Services.AddScoped<IInstitutesRepository, InstitutesRepository>();
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<IFactory<ICourse>, CourseFactory>();
+            builder.Services.AddScoped<InnopolisImportStrategy>();
+            builder.Services.AddScoped<MoodleImportStrategy>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
+            builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<INotificationFactory, NotificationFactory>();
+
+            builder.Services.AddSingleton(sp =>
+            {
+                return new ConnectionFactory()
+                {
+                    HostName = "localhost",
+                };
+            });
+
+            builder.Services.AddSingleton<IHostedService, RabbitMQBackgroundService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 
@@ -110,13 +142,19 @@ namespace Webflow
                 app.UseSwaggerUI();
             }
 
+            app.UseRouting();
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.MapControllers();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+            });
 
             app.Run();
         }

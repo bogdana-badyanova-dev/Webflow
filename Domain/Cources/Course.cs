@@ -1,5 +1,5 @@
 ﻿using Webflow.Application.Enums;
-using Webflow.Application.Interfaces;
+using Webflow.Application.Interfaces.Courses;
 using Webflow.Domain.Skills;
 using Webflow.Domain.Students;
 
@@ -56,7 +56,7 @@ namespace Webflow.Domain.Cources
         /// <summary>
         /// Элементы курса (только для Moodle-курсов)
         /// </summary>
-        public IEnumerable<MoodleCourseElement>? CourseElements { get; set; }
+        public IEnumerable<MoodleCourseElement> CourseElements { get; set; }
 
         /// <summary>
         /// Дата создания курса

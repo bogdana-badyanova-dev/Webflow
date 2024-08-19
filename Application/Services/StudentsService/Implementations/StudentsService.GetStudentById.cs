@@ -23,7 +23,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 
             var result = await studentsRepository.GetByIdAsync((Guid)id, cancellationToken);
 
-            if (result == null)
+            if (result == null || result.RemovedAt != null)
             {
                 response.ErrorMessages.Append(StudentErrorMessages.STUDENT_NOT_FOUND);
                 return response;
