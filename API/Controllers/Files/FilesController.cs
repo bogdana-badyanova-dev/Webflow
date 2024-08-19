@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using System.Text;
-using Webflow.Application.Interfaces;
 using Webflow.Application.Services.FilesService.Interfaces;
 
 namespace Webflow.API.Controllers.Files

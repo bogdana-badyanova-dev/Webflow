@@ -1,59 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Webflow.API.Dto.Import;
-using Webflow.API.Dto.Shared;
-using Webflow.Application.Enums;
-using Webflow.Application.Interfaces;
 using Webflow.Application.Services.Import.Interfaces;
 
 namespace Webflow.API.Controllers.Import
 {
+    /// <summary>
+    /// Контроллер для обработки операций импорта данных.
+    /// </summary>
+    /// <remarks>
+    /// Этот контроллер предоставляет методы для выполнения различных операций по импорту данных, таких как предварительный просмотр данных из Excel-файла и полный импорт данных из Excel-файла.
+    /// </remarks>
     [Route("api/[controller]")]
     [ApiController]
-    public class ImportController : ControllerBase
+    public partial class ImportController : ControllerBase
     {
         private readonly IImportService importService;
 
         public ImportController(IImportService importService)
         {
             this.importService = importService;
-        }
-
-        [HttpPost("import-preview")]
-        public async Task<ActionResult<BaseResponse<ExcelImportResult>>> ImportPreviewExcelFile(IFormFile file, CancellationToken cancellationToken, int previewRowsCount = 5)
-        {
-            var result = await importService.ImportPreviewExcelFile(file, cancellationToken, previewRowsCount);
-
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
-
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Импортирует данные из файла с учетом маппинга полей
-        /// </summary>
-        /// <param name="fileId">ID файла для импорта</param>
-        /// <param name="platform">Платформа источника данных</param>
-        /// <param name="mappings">Маппинг полей модели и столбцов файла</param>
-        /// <param name="cancellationToken">Токен отмены</param>
-        /// <returns>Результат импорта в формате ExcelImportResult</returns>
-        [HttpPost("import")]
-        public async Task<ActionResult<IImportResult>> ImportExcelFile(
-            Guid fileId,
-            PlatformEnum platform,
-            IEnumerable<FieldMapping> mappings,
-            CancellationToken cancellationToken)
-        {
-            var result = await importService.ImportExcelFile(fileId, platform, mappings, cancellationToken);
-
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
-
-            return Ok(result);
         }
     }
 }
