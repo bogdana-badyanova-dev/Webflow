@@ -17,5 +17,4 @@ namespace Webflow.Application.Services.AuthService.Implementations
             return await identity.SignUp(request, cancellationToken);
         }
     }
-
 }

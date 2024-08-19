@@ -11,6 +11,11 @@ namespace Webflow.Application.Services.FilesService.Implementations
         private readonly IConfiguration configuration;
         private readonly IFilesRepository filesRepository;
 
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="GoogleDriveService"/>.
+        /// </summary>
+        /// <param name="configuration">Объект конфигурации, используемый для доступа к настройкам.</param>
+        /// <param name="filesRepository">Репозиторий для работы с файлами, используемый для хранения и извлечения файлов.</param>
         public GoogleDriveService(IConfiguration configuration, IFilesRepository filesRepository)
         {
             this.configuration = configuration;

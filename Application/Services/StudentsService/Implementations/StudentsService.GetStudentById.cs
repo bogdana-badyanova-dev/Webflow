@@ -7,6 +7,12 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 {
     public partial class StudentsService : IStudentsService
     {
+        /// <summary>
+        /// Получает данные студента по уникальному идентификатору
+        /// </summary>
+        /// <param name="id">Уникальный идентификатор студента. Может быть null</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Возвращает объект <see cref="BaseResponse{StudentViewDto}"/>, содержащий информацию о студенте или сообщения об ошибках</returns>
         public async Task<BaseResponse<StudentViewDto>> GetStudentById(Guid? id, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<StudentViewDto>()

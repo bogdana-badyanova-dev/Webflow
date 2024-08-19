@@ -7,12 +7,30 @@ using System.Reflection;
 
 namespace Webflow.Application.Helpers
 {
+    /// <summary>
+    /// Абстрактный класс, представляющий базовую стратегию импорта данных
+    /// </summary>
+    /// <typeparam name="T">Тип результата импорта, реализующий интерфейс <see cref="IImportResult"/></typeparam>
+    /// <typeparam name="K">Тип данных, используемый для обработки импорта, должен быть ссылочным типом и иметь конструктор без параметров</typeparam>
     public abstract class BaseImportStrategy<T, K> : IImportStrategy<T>
     where T : IImportResult
     where K : class, new()
     {
+        /// <summary>
+        /// Импортирует данные из файла на основе предоставленных настроек и сопоставлений полей
+        /// </summary>
+        /// <param name="fileId">Идентификатор файла, содержащего данные для импорта</param>
+        /// <param name="mappings">Список сопоставлений полей, указывающих, как данные в файле должны быть преобразованы в объекты</param>
+        /// <param name="cancellationToken">Токен отмены для отмены операции импорта</param>
+        /// <returns>Асинхронная задача, возвращающая результат импорта, который реализует интерфейс <see cref="IImportResult"/></returns>
         public abstract Task<T> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Преобразует содержимое файла в коллекцию моделей на основе предоставленных сопоставлений полей
+        /// </summary>
+        /// <param name="content">Содержимое файла в виде массива байтов</param>
+        /// <param name="mappings">Список сопоставлений полей, указывающих, как данные в файле должны быть преобразованы в объекты</param>
+        /// <returns>Коллекция моделей, представляющих данные из файла.</returns>
         public IEnumerable<K> ConvertFileContentToModelCollection(byte[] content, IEnumerable<FieldMapping> mappings)
         {
             var data = new List<K>();
@@ -101,6 +119,13 @@ namespace Webflow.Application.Helpers
             return data;
         }
 
+        /// <summary>
+        /// Устанавливает значение свойства модели на основе указанного значения ячейки и имени элемента курса
+        /// </summary>
+        /// <param name="model">Модель, в которую устанавливается значение</param>
+        /// <param name="propertyInfo">Информация о свойстве модели, которое нужно установить</param>
+        /// <param name="cellValue">Значение ячейки, которое будет присвоено свойству модели</param>
+        /// <param name="courseElementName">Опциональное имя элемента курса для дополнительной контекстной информации</param>
         protected virtual void SetPropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
             bool isEnumerableProperty = typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType);
@@ -115,40 +140,48 @@ namespace Webflow.Application.Helpers
             }
         }
 
+        /// <summary>
+        /// Устанавливает значение простого свойства модели на основе указанного значения ячейки
+        /// </summary>
+        /// <param name="model">Модель, в которую устанавливается значение</param>
+        /// <param name="propertyInfo">Информация о простом свойстве модели, которое нужно установить</param>
+        /// <param name="cellValue">Значение ячейки, которое будет присвоено свойству модели</param>
         protected virtual void SetSimplePropertyValue(K model, PropertyInfo propertyInfo, string cellValue)
         {
             object value = Convert.ChangeType(cellValue, propertyInfo.PropertyType);
             propertyInfo.SetValue(model, value);
         }
 
+        /// <summary>
+        /// Устанавливает значение свойства типа <see cref="IEnumerable{T}"/> модели на основе указанного значения ячейки.
+        /// </summary>
+        /// <param name="model">Модель, в которую устанавливается значение</param>
+        /// <param name="propertyInfo">Информация о свойстве модели типа <see cref="IEnumerable{T}"/>, которое нужно установить</param>
+        /// <param name="cellValue">Значение ячейки, которое будет преобразовано и присвоено свойству модели</param>
+        /// <param name="courseElementName">Необязательное имя элемента курса, которое может использоваться для дополнительной обработки значения (по умолчанию <c>null</c>)</param>
         protected virtual void SetIEnumerablePropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
-                // Получаем тип элементов внутри IEnumerable
-                var elementType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
+            var elementType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
 
-                if (elementType != null)
+            if (elementType != null)
+            {
+                var listType = typeof(List<>).MakeGenericType(elementType);
+                var list = (IList)Activator.CreateInstance(listType);
+
+                object value = Convert.ChangeType(cellValue, elementType);
+                list.Add(value);
+
+                var existingValue = propertyInfo.GetValue(model) as IList;
+                if (existingValue != null)
                 {
-                    // Создаем экземпляр коллекции
-                    var listType = typeof(List<>).MakeGenericType(elementType);
-                    var list = (IList)Activator.CreateInstance(listType);
-
-                    // Преобразуем значение ячейки в нужный тип и добавляем в коллекцию
-                    object value = Convert.ChangeType(cellValue, elementType);
-                    list.Add(value);
-
-                    // Добавляем существующие значения, если они уже есть в модели
-                    var existingValue = propertyInfo.GetValue(model) as IList;
-                    if (existingValue != null)
+                    foreach (var item in existingValue)
                     {
-                        foreach (var item in existingValue)
-                        {
-                            list.Add(item);
-                        }
+                        list.Add(item);
                     }
-
-                    // Устанавливаем заполненную коллекцию в свойство модели
-                    propertyInfo.SetValue(model, list);
                 }
+
+                propertyInfo.SetValue(model, list);
+            }
         }
     }
 }

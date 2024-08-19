@@ -15,5 +15,4 @@
         /// </summary>
         public int Size { get; set; }
     }
-
 }

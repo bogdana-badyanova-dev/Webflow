@@ -1,6 +1,4 @@
-﻿using Webflow.Application.Messages.ErrorMessages;
-
-namespace Webflow.Application.Messages.ErrorMessages.Students
+﻿namespace Webflow.Application.Messages.ErrorMessages.Students
 {
     /// <summary>
     /// Абстрактный класс, содержащий сообщения об ошибках, специфичные для операций со студентами.
@@ -22,8 +20,5 @@ namespace Webflow.Application.Messages.ErrorMessages.Students
         /// Сообщение об ошибке, когда институт не может быть удален.
         /// </summary>
         public const string INSTITUTE_CANNOT_CREATE = "Институт не может быть создан";
-
-
     }
-
 }

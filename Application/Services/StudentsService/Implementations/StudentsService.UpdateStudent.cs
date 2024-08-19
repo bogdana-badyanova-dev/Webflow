@@ -2,12 +2,17 @@
 using Webflow.API.Dto.Students;
 using Webflow.Application.Messages.ErrorMessages.Students;
 using Webflow.Application.Services.StudentsService.Interfaces;
-using Webflow.Domain.Students;
 
 namespace Webflow.Application.Services.StudentsService.Implementations
 {
     public partial class StudentsService : IStudentsService
     {
+        /// <summary>
+        /// обновление студента по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор студента</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий результат операции удаления</returns>
         public async Task<BaseResponse<StudentViewDto>> UpdateStudent(Guid? id, UpdateStudentRequest request, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<StudentViewDto>() {

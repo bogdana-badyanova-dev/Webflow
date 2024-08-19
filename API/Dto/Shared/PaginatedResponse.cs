@@ -16,5 +16,4 @@
         /// </summary>
         public int TotalCount { get; set; } = 0;
     }
-
 }

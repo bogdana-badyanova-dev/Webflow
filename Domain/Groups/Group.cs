@@ -18,5 +18,4 @@ namespace Webflow.Domain.Groups
         /// </summary>
         public virtual ICollection<Student> Students { get; set; } = new List<Student>();
     }
-
 }

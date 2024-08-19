@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using Webflow.Application.Services.Identity.Interfaces;
 using Webflow.Domain.Users;
 

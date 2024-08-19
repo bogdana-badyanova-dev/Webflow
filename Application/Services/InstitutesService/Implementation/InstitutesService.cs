@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Webflow.API.Dto.Institutes;
-using Webflow.API.Dto.Shared;
 using Webflow.Application.Services.InstitutesService.Interfaces;
 using Webflow.Application.Services.NotificationsService.Interfaces;
 using Webflow.Infrastructure.Repositories.InstitutesRepository.Interfaces;
-using Webflow.Infrastructure.Repositories.StudentsRepository.Interfaces;
 
 namespace Webflow.Application.Services.InstitutesService.Implementation
 {

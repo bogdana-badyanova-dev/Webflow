@@ -1,17 +1,18 @@
-﻿using AutoMapper;
-using Webflow.API.Dto.Institutes;
+﻿using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
-using Webflow.API.Dto.Students;
 using Webflow.Application.Messages.ErrorMessages.Students;
-using Webflow.Application.Messages.SuccessefulMessages.Students;
 using Webflow.Application.Services.InstitutesService.Interfaces;
-using Webflow.Infrastructure.Repositories.InstitutesRepository.Implementations;
-using Webflow.Infrastructure.Repositories.StudentsRepository.Implementations;
 
 namespace Webflow.Application.Services.InstitutesService.Implementation
 {
     public partial class InstitutesService : IInstitutesService
     {
+        /// <summary>
+        /// Получение института по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор института</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий результат операции удаления</returns>
         public async Task<BaseResponse<InstituteViewDto>> GetInstituteById(Guid? id, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<InstituteViewDto>()

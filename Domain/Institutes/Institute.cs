@@ -12,5 +12,4 @@ namespace Webflow.Domain.Institutes
         /// </summary>
         public required string Name { get; set; }
     }
-
 }

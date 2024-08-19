@@ -8,6 +8,12 @@ namespace Webflow.Application.Services.StudentsService.Implementations
 {
     public partial class StudentsService : IStudentsService
     {
+        /// <summary>
+        /// Получение списка студентов с поддержкой пагинации и сортировки
+        /// </summary>
+        /// <param name="request">Запрос с параметрами пагинации, фильтрации и сортировки</param>
+        /// <param name="cancellationToken">Токен отмены операции</param>
+        /// <returns>Ответ, содержащий список студентов и общую информацию о пагинации</returns>
         public async Task<BaseResponse<PaginatedResponse<StudentViewDto>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
             var result = await studentsRepository.GetPagedAsync(request, cancellationToken);

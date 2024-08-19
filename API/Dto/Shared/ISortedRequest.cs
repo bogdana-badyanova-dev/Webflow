@@ -12,5 +12,4 @@ namespace Webflow.Domain.Shared
         /// </summary>
         public ISortField[] Sort { get; set; }
     }
-
 }

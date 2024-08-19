@@ -1,6 +1,5 @@
 ﻿using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
-using Webflow.Domain.Institutes;
 
 namespace Webflow.Application.Services.InstitutesService.Interfaces
 {
@@ -18,7 +17,7 @@ namespace Webflow.Application.Services.InstitutesService.Interfaces
         public Task<BaseResponse<InstituteViewDto>> CreateInstitute(CreateInstituteRequest request,CancellationToken cancellationToken);
 
         /// <summary>
-        /// получение института по идентификатору
+        /// Получение института по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор института</param>
         /// <param name="cancellationToken">Токен отмены операции</param>

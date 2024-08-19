@@ -9,11 +9,11 @@
         /// <summary>
         /// Уникальный идентификатор сущности
         /// </summary>
-        TId Id { get; set; }
+        public TId Id { get; set; }
 
         /// <summary>
         /// Дата создания сущности
         /// </summary>
-        DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -8,6 +8,13 @@ namespace Webflow.Application.Helpers
 {
     public partial class MoodleImportStrategy : BaseImportStrategy<IImportResult, MoodleImport>
     {
+        /// <summary>
+        /// Импортирует данные из файла, предоставленного по указанному идентификатору, в соответствии с заданными сопоставлениями полей.
+        /// </summary>
+        /// <param name="fileId">Идентификатор файла, содержащего данные для импорта.</param>
+        /// <param name="mappings">Список сопоставлений полей для преобразования данных из файла в модель.</param>
+        /// <param name="cancellationToken">Токен отмены для отмены операции импорта.</param>
+        /// <returns>Результат импорта данных в формате <see cref="IImportResult"/>.</returns>
         public override async Task<IImportResult> Import(Guid fileId, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken = default)
         {
             var file = await filesService.DownloadFile(fileId, cancellationToken);
@@ -23,6 +30,13 @@ namespace Webflow.Application.Helpers
             return response;
         }
 
+        /// <summary>
+        /// Устанавливает значения для свойства типа <see cref="IEnumerable{T}"/> модели из значения ячейки.
+        /// </summary>
+        /// <param name="model">Модель, в которую будут установлены значения свойства.</param>
+        /// <param name="propertyInfo">Информация о свойстве, которое необходимо установить.</param>
+        /// <param name="cellValue">Значение ячейки, которое нужно преобразовать и установить.</param>
+        /// <param name="courseElementName">Имя элемента курса, которое может быть использовано для дополнительной логики (опционально).</param>
         protected override void SetIEnumerablePropertyValue(MoodleImport model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
 
@@ -54,6 +68,11 @@ namespace Webflow.Application.Helpers
             }
         }
 
+        /// <summary>
+        /// Добавляет значение к списку имен элементов курса в модели MoodleImport.
+        /// </summary>
+        /// <param name="model">Модель типа <see cref="MoodleImport"/>.</param>
+        /// <param name="courseElementName">Имя элемента курса, которое необходимо добавить в список.</param>
         private void AddToCourseElementName(MoodleImport model, string courseElementName)
         {
             if (!string.IsNullOrEmpty(courseElementName))

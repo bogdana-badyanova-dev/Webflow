@@ -1,11 +1,9 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Services.FilesService.Interfaces;
-using Webflow.Domain.Files;
 
 namespace Webflow.Application.Services.FilesService.Implementations
 {
@@ -69,17 +67,6 @@ namespace Webflow.Application.Services.FilesService.Implementations
             response.Data = await SaveFile(request.ResponseBody.Id, cancellationToken);
 
             return response;
-        }
-
-        private async Task<Guid> SaveFile(string fileId, CancellationToken cancellationToken)
-        {
-            var importedFile = new UploadedFile
-            {
-                Id = new Guid(),
-                FileId = fileId,
-            };
-
-            return await filesRepository.AddAsync(importedFile, cancellationToken);
         }
     }
 }

@@ -17,6 +17,6 @@ namespace Webflow.Infrastructure.Repositories.StudentsRepository.Interfaces
         /// <param name="request">Запрос с параметрами для фильтрации, пагинации и сортировки</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Пагинированный список студентов</returns>
-        Task<PaginatedResponse<Student>> GetPagedAsync(GetPagedStudentsRequest request, CancellationToken cancellationToken);
+        public Task<PaginatedResponse<Student>> GetPagedAsync(GetPagedStudentsRequest request, CancellationToken cancellationToken);
     }
 }

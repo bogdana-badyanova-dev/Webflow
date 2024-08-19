@@ -15,14 +15,14 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="id">Уникальный идентификатор сущности</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Сущность с указанным идентификатором или null, если не найдена</returns>
-        Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        public Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Получает все сущности из репозитория
         /// </summary>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Коллекция всех сущностей</returns>
-        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
+        public Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Выполняет поиск сущностей по заданному условию
@@ -30,7 +30,7 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="predicate">Условие для фильтрации сущностей</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Коллекция сущностей, удовлетворяющих условию</returns>
-        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
+        public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет новую сущность в репозиторий
@@ -38,7 +38,7 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="entity">Добавляемая сущность</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>True, если сущность успешно добавлена, иначе false</returns>
-        Task<Guid> AddAsync(T entity, CancellationToken cancellationToken);
+        public Task<Guid> AddAsync(T entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет несколько сущностей в репозиторий
@@ -46,7 +46,7 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="entities">Коллекция добавляемых сущностей</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Коллекция добавленных сущностей</returns>
-        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+        public Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновляет существующую сущность в репозитории
@@ -54,7 +54,7 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="entity">Обновляемая сущность</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Обновленная сущность</returns>
-        Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
+        public Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаляет сущность из репозитория
@@ -62,7 +62,7 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="entity">Удаляемая сущность</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>True, если сущность успешно удалена, иначе false</returns>
-        Task<bool> DeleteAsync(T entity, CancellationToken cancellationToken);
+        public Task<bool> DeleteAsync(T entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаляет несколько сущностей из репозитория
@@ -70,6 +70,6 @@ namespace Webflow.Infrastructure.Repositories.BaseRepository.Interfaces
         /// <param name="entities">Коллекция удаляемых сущностей</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>True, если все сущности успешно удалены, иначе false</returns>
-        Task<bool> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+        public Task<bool> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
     }
 }

@@ -21,6 +21,12 @@ namespace Webflow.Infrastructure.Repositories.StudentsRepository.Implementations
         {
         }
 
+        /// <summary>
+        /// Получает страницу студентов с поддержкой пагинации и сортировки.
+        /// </summary>
+        /// <param name="request">Запрос, содержащий параметры пагинации, фильтрации и сортировки студентов.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Возвращает объект <see cref="PaginatedResponse{Student}"/>, содержащий список студентов и информацию о пагинации.</returns>
         public async Task<PaginatedResponse<Student>> GetPagedAsync(GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
             

@@ -10,5 +10,4 @@
         /// </summary>
         public const string ID_CANNOT_BE_NULL = "Идентификатор не может быть пустым";
     }
-
 }

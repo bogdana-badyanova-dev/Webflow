@@ -1,35 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using OfficeOpenXml;
 using RabbitMQ.Client;
 using System.Text;
 using Webflow.API.Dto.Import;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;
-using Webflow.Application.Helpers;
 using Webflow.Application.Interfaces;
-using Webflow.Application.Interfaces.Import;
 using Webflow.Application.Services.FilesService.Interfaces;
 using Webflow.Application.Services.Import.Interfaces;
-using Webflow.Application.Services.NotificationsService.Interfaces;
 
 namespace Webflow.Application.Services.Import.Implementations
 {
+    /// <summary>
+    /// Сервис для обработки импорта данных из Excel файлов.
+    /// </summary>
     public class ImportService : IImportService
     {
-        private readonly IImportStrategyFactory<IImportResult> importStrategyFactory;
         private readonly IFilesService filesService;
-        private readonly INotificationService notificationService;
         private readonly ConnectionFactory factory;
 
-        public ImportService(IImportStrategyFactory<IImportResult> importStrategyFactory, IFilesService filesService, INotificationService notificationService, ConnectionFactory factory)
+        /// <summary>
+    /// Инициализирует новый экземпляр класса <see cref="ImportService"/>.
+    /// </summary>
+    /// <param name="filesService">Сервис для работы с файлами.</param>
+    /// <param name="factory">Фабрика для создания соединений с RabbitMQ.</param>
+        public ImportService(IFilesService filesService, ConnectionFactory factory)
         {
-            this.importStrategyFactory = importStrategyFactory;
             this.filesService = filesService;
-            this.notificationService = notificationService;
             this.factory = factory;
         }
 
+        /// <summary>
+        /// Импортирует предварительный просмотр данных из Excel файла.
+        /// </summary>
+        /// <param name="file">Файл Excel для предварительного просмотра.</param>
+        /// <param name="cancellationToken">Токен для отмены операции.</param>
+        /// <param name="previewRowsCount">Количество строк для предварительного просмотра. По умолчанию 5.</param>
+        /// <returns>Результат предварительного просмотра импорта, содержащий информацию о файле и заголовках.</returns>
         public async Task<BaseResponse<ExcelImportResult>> ImportPreviewExcelFile(IFormFile file, CancellationToken cancellationToken, int previewRowsCount = 5)
         {
             var response = new BaseResponse<ExcelImportResult>
@@ -94,6 +101,14 @@ namespace Webflow.Application.Services.Import.Implementations
             }
         }
 
+        /// <summary>
+        /// Импортирует данные из Excel файла.
+        /// </summary>
+        /// <param name="fileId">Идентификатор файла Excel.</param>
+        /// <param name="platform">Платформа, с которой связан файл.</param>
+        /// <param name="mappings">Сопоставления полей для импорта данных.</param>
+        /// <param name="cancellationToken">Токен для отмены операции.</param>
+        /// <returns>Результат импорта, содержащий информацию о результате операции.</returns>
         public async Task<BaseResponse<IImportResult>> ImportExcelFile(
             Guid fileId,
             PlatformEnum platform,

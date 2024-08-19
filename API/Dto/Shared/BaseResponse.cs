@@ -26,5 +26,4 @@
         /// </summary>
         public IEnumerable<string> WarningMessages { get; set; } = new List<string>();
     }
-
 }
