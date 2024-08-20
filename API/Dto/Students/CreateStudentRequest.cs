@@ -59,6 +59,7 @@ namespace Webflow.API.Dto.Students
         /// <summary>
         /// Пол студента
         /// </summary>
+        [DefaultValue(GenderEnum.MALE)]
         public required GenderEnum Gender { get; set; } = GenderEnum.UNDEFINED;
 
         /// <summary>
@@ -72,6 +73,5 @@ namespace Webflow.API.Dto.Students
         /// </summary>
         [DefaultValue(null)]
         public Guid? InstituteId { get; set; }
-
     }
 }
