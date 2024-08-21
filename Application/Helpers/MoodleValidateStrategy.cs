@@ -7,8 +7,17 @@ namespace Webflow.Application.Helpers
 {
     public class MoodleValidateStrategy : IValidateStrategy
     {
-        public Task<BaseResponse<bool>> Validate(IImportResult model, CancellationToken cancellationToken = default)
+        public Task<BaseResponse<bool>> Validate(IImportResult result, CancellationToken cancellationToken = default)
         {
+            var importResult = result as MoodleImportResult;
+            if (importResult == null)
+            {
+                // TODO
+                throw new InvalidCastException("Invalid model type provided.");
+            }
+
+            var model = importResult.Data;
+
             throw new NotImplementedException();
         }
     }
