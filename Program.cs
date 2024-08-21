@@ -87,8 +87,8 @@ namespace Webflow
             builder.Services.AddScoped<IInstitutesRepository, InstitutesRepository>();
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();
             builder.Services.AddScoped<IFactory<ICourse>, CourseFactory>();
-            builder.Services.AddScoped<BaseImportStrategy<IImportResult, InnopolisImport>, InnopolisImportStrategy>();
-            builder.Services.AddScoped<BaseImportStrategy < IImportResult, MoodleImport >, MoodleImportStrategy >();
+            builder.Services.AddScoped<InnopolisImportStrategy>();
+            builder.Services.AddScoped<MoodleImportStrategy >();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IIdentityService, IdentityService>();
             builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
