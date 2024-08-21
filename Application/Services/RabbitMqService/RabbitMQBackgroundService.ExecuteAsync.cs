@@ -1,11 +1,12 @@
-﻿using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Text;
 using Webflow.API.Dto.Import;
 using Webflow.Application.Enums;
-using Webflow.Application.Interfaces.Import;
+using Webflow.Application.Helpers;
 using Webflow.Application.Interfaces;
+using Webflow.Application.Interfaces.Import;
 using Webflow.Application.Services.NotificationsService.Interfaces;
 
 public partial class RabbitMQBackgroundService : BackgroundService
@@ -41,12 +42,43 @@ public partial class RabbitMQBackgroundService : BackgroundService
 
                         using (var scope = serviceProvider.CreateScope())
                         {
-                            var importStrategyFactory = scope.ServiceProvider.GetRequiredService<IImportStrategyFactory<IImportResult>>();
-                            var strategy = importStrategyFactory.CreateStrategy(data.Platform);
-                            var result = await strategy.Import(data.FileId, data.Mappings);
-
                             var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
-                            await notificationService.SendNotificationAsync(NotificationType.Object, null, result);
+
+                            var importStrategyFactory = scope.ServiceProvider.GetRequiredService<IImportStrategyFactory<IImportResult>>();
+                            var importStrategy = importStrategyFactory.CreateStrategy(data.Platform);
+                            var importModel = await importStrategy.Import(data.FileId, data.Mappings);
+
+                            //var importValidateStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
+                            //var validateStrategy = importValidateStrategyFactory.CreateStrategy(data.Platform);
+                            //var validationResult = await validateStrategy.Validate(importModel);
+
+                            //if (!validationResult.IsSuccess)
+                            //{
+                            //    await notificationService.SendNotificationAsync(NotificationType.Object, null, validationResult);
+                            //}
+                            //else
+                            //{
+
+
+                                //TODO
+                                //для МУДЛА
+                                //сохранить проверить студента, 
+                                //сохранить проверить курс,
+                                //сохранить элементы для курса
+                                //сохранить результаты студента(элементы курса)
+                                //посчитать итоговые баллы по элементам курса
+                                //
+                                //
+                                //для ИННОПОЛИС
+                                //сохранить проверить студента, 
+                                //сохранить проверить курс,
+                                //сохранить компитенции
+                                // результат по каждой компитенции
+                                //
+
+                                await notificationService.SendNotificationAsync(NotificationType.Success, "Обработан");
+                            //}
+
                         }
 
                         Console.WriteLine($"[x] Received message: {data}");

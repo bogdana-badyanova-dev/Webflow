@@ -12,7 +12,7 @@ namespace Webflow.Application.Helpers
     /// </remarks>
     public class ImportStrategyFactory : IImportStrategyFactory<IImportResult>
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider serviceProvider;
 
         /// <summary>
         /// Конструктор фабрики стратегий импорта
@@ -20,7 +20,7 @@ namespace Webflow.Application.Helpers
         /// <param name="serviceProvider">Сервис-провайдер для разрешения зависимостей</param>
         public ImportStrategyFactory(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider;
+            this.serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -33,8 +33,8 @@ namespace Webflow.Application.Helpers
         {
             return source switch
             {
-                PlatformEnum.MOODLE => _serviceProvider.GetRequiredService<MoodleImportStrategy>(),
-                PlatformEnum.INNOPOLIS => _serviceProvider.GetRequiredService<InnopolisImportStrategy>(),
+                PlatformEnum.MOODLE => serviceProvider.GetRequiredService<MoodleImportStrategy>(),
+                PlatformEnum.INNOPOLIS => serviceProvider.GetRequiredService<InnopolisImportStrategy>(),
                 _ => throw new ArgumentException("Неизвестный источник импорта", nameof(source))
             };
         }

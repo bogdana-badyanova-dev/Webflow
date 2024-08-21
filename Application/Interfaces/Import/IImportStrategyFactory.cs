@@ -1,4 +1,5 @@
-﻿using Webflow.Application.Enums;
+﻿using Webflow.API.Dto.Import;
+using Webflow.Application.Enums;
 
 namespace Webflow.Application.Interfaces.Import
 {
