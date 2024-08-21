@@ -4,7 +4,7 @@
     /// Абстрактный класс, содержащий сообщения об ошибках, специфичные для операций с компетенциями.
     /// Наследует общие сообщения об ошибках из класса <see cref="CommonErrorMessages"/>.
     /// </summary>
-    public abstract class SkillsErrorMessages : CommonErrorMessages
+    public abstract class SkillErrorMessages : CommonErrorMessages
     {
         /// <summary>
         /// Сообщение об ошибке, когда данные о компетенции не найдены.

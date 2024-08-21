@@ -31,7 +31,7 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 
             if (result == null)
             {
-                response.ErrorMessages.Append(SkillsErrorMessages.INSTITUTE_NOT_FOUND);
+                response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_NOT_FOUND);
                 return response;
             }
 

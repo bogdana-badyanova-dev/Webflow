@@ -12,6 +12,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\Services\SkillsService\Implementations\**" />
+    <Compile Remove="Application\Services\SkillsService\Interfaces\**" />
+    <Content Remove="Application\Services\SkillsService\Implementations\**" />
+    <Content Remove="Application\Services\SkillsService\Interfaces\**" />
+    <EmbeddedResource Remove="Application\Services\SkillsService\Implementations\**" />
+    <EmbeddedResource Remove="Application\Services\SkillsService\Interfaces\**" />
+    <None Remove="Application\Services\SkillsService\Implementations\**" />
+    <None Remove="Application\Services\SkillsService\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Application\Services\SkillsService\Implementations\SkillsService.cs" />
+    <Compile Include="Application\Services\SkillsService\Interfaces\ISkillsService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="EPPlus" Version="7.2.2" />
     <PackageReference Include="FluentValidation" Version="11.9.2" />
@@ -43,6 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<Folder Include="API\Controllers\Skills\" />
 	<Folder Include="Domain\CourseResults\" />
 	<Folder Include="Domain\Attendance\" />
 	<Folder Include="Domain\CourseResults\" />

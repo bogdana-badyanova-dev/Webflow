@@ -36,7 +36,7 @@ namespace Webflow.Application.Services.SkillsService.Implementations
 
             if (result == null)
             {
-                response.ErrorMessages.Append(SkillsErrorMessages.SKILL_NOT_FOUND);
+                response.ErrorMessages.Append(SkillErrorMessages.SKILL_NOT_FOUND);
                 return response;
             }
 
