@@ -18,7 +18,7 @@ namespace Webflow.API.Controllers.Institutes
         /// <summary>
         /// Конструктор контроллера институтов.
         /// </summary>
-        /// <param name="studentsService">Сервис для работы с институтами.</param>
+        /// <param name="institutesService">Сервис для работы с институтами.</param>
         public InstitutesController(IInstitutesService institutesService)
         {
             this.institutesService = institutesService;
