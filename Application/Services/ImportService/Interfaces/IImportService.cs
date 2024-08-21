@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Webflow.API.Dto.Import;
+﻿using Webflow.API.Dto.Import;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;
-using Webflow.Application.Interfaces;
 
 namespace Webflow.Application.Services.Import.Interfaces
 {
@@ -28,7 +26,7 @@ namespace Webflow.Application.Services.Import.Interfaces
         /// <param name="mappings">Сопоставления полей для импорта данных.</param>
         /// <param name="cancellationToken">Токен для отмены операции.</param>
         /// <returns>Результат импорта, содержащий информацию о результате операции.</returns>
-        public Task<BaseResponse<IImportResult>> ImportExcelFile(Guid fileId, PlatformEnum platform, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken);
+        public Task<BaseResponse<string>> ImportExcelFile(Guid fileId, PlatformEnum platform, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken);
     }
 
 }
