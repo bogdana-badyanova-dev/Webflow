@@ -5,11 +5,11 @@ using Webflow.Application.Interfaces.Import;
 
 namespace Webflow.Application.Helpers
 {
-    public class MoodleValidateStrategy : IValidateStrategy
+    public class InnopolisValidationStrategy : IValidationStrategy
     {
         public Task<BaseResponse<bool>> Validate(IImportResult result, CancellationToken cancellationToken = default)
         {
-            var importResult = result as MoodleImportResult;
+            var importResult = result as InnopolisImportResult;
             if (importResult == null)
             {
                 // TODO

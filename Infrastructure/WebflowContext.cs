@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Webflow.Domain.Institutes;
-using Webflow.Domain.Groups;
-using Webflow.Domain.Students;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Webflow.Domain.Cources;
-using Webflow.Domain.Skills;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Webflow.Domain.Users;
 using Webflow.Domain.Files;
+using Webflow.Domain.Groups;
+using Webflow.Domain.Institutes;
+using Webflow.Domain.Skills;
+using Webflow.Domain.Students;
+using Webflow.Domain.Users;
 
 namespace Webflow.Infrastructure
 {

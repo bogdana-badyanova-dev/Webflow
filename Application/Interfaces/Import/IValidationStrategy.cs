@@ -2,7 +2,7 @@
 
 namespace Webflow.Application.Interfaces.Import
 {
-    public interface IValidateStrategy
+    public interface IValidationStrategy
     {
         public Task<BaseResponse<bool>> Validate(IImportResult model, CancellationToken cancellationToken = default);
     }

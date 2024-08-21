@@ -93,8 +93,8 @@ namespace Webflow
             builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<INotificationFactory, NotificationFactory>();
             builder.Services.AddScoped<ImportValidationStrategyFactory>();
-            builder.Services.AddScoped<MoodleValidateStrategy>();
-            builder.Services.AddScoped<InnopolisValidateStrategy>();
+            builder.Services.AddScoped<MoodleValidationStrategy>();
+            builder.Services.AddScoped<InnopolisValidationStrategy>();
             builder.Services.AddSingleton(sp =>
             {
                 return new ConnectionFactory()

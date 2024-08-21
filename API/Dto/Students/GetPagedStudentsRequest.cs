@@ -1,6 +1,6 @@
-﻿using Webflow.Domain.Shared;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Webflow.Application.Interfaces;
+using Webflow.Domain.Shared;
 
 namespace Webflow.API.Dto.Students
 {

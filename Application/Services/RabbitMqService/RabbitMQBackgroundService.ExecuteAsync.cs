@@ -48,9 +48,9 @@ public partial class RabbitMQBackgroundService : BackgroundService
                             var importStrategy = importStrategyFactory.CreateStrategy(data.Platform);
                             var importModel = await importStrategy.Import(data.FileId, data.Mappings);
 
-                            var importValidateStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
-                            var validateStrategy = importValidateStrategyFactory.CreateStrategy(data.Platform);
-                            var validationResult = await validateStrategy.Validate(importModel);
+                            var importValidationStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
+                            var validationStrategy = importValidationStrategyFactory.CreateStrategy(data.Platform);
+                            var validationResult = await validationStrategy.Validate(importModel);
 
                             if (!validationResult.IsSuccess)
                             {

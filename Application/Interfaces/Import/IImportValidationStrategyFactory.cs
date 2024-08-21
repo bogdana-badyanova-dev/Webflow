@@ -4,6 +4,6 @@ namespace Webflow.Application.Interfaces.Import
 {
     public interface IImportValidationStrategyFactory
     {
-        public IValidateStrategy CreateStrategy(PlatformEnum source);  
+        public IValidationStrategy CreateStrategy(PlatformEnum source);  
     }
 }

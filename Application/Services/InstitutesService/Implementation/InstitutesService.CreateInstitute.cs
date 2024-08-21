@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Webflow.Domain.Shared;
+﻿using Webflow.Domain.Shared;
 
 namespace Webflow.API.Dto.Institutes
 {
