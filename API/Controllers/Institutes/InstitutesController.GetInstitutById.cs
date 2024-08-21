@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
-using Webflow.Application.Services.InstitutesService.Implementation;
 
 namespace Webflow.API.Controllers.Institutes
 {

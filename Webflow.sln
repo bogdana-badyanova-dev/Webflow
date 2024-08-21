@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webflow", "Webflow.csproj", "{967B14BE-4D3F-47CC-9A7B-799A9E6DF114}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webflow.Tests", "..\Webflow.Tests\Webflow.Tests.csproj", "{20AEDF55-C40F-48E0-90EF-12CCB1A5E6BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{967B14BE-4D3F-47CC-9A7B-799A9E6DF114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{967B14BE-4D3F-47CC-9A7B-799A9E6DF114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{967B14BE-4D3F-47CC-9A7B-799A9E6DF114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AEDF55-C40F-48E0-90EF-12CCB1A5E6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AEDF55-C40F-48E0-90EF-12CCB1A5E6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AEDF55-C40F-48E0-90EF-12CCB1A5E6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AEDF55-C40F-48E0-90EF-12CCB1A5E6BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
