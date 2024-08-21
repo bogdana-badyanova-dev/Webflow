@@ -28,7 +28,7 @@ namespace Webflow.Application.Services.Import.Interfaces
         /// <param name="mappings">Сопоставления полей для импорта данных.</param>
         /// <param name="cancellationToken">Токен для отмены операции.</param>
         /// <returns>Результат импорта, содержащий информацию о результате операции.</returns>
-        public Task<BaseResponse<IImportResult>> ImportExcelFile(Guid fileId, PlatformEnum platform, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken);
+        public Task<BaseResponse<string>> ImportExcelFile(Guid fileId, PlatformEnum platform, IEnumerable<FieldMapping> mappings, CancellationToken cancellationToken);
     }
 
 }

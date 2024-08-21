@@ -109,7 +109,7 @@ namespace Webflow.Application.Services.Import.Implementations
         /// <param name="mappings">Сопоставления полей для импорта данных.</param>
         /// <param name="cancellationToken">Токен для отмены операции.</param>
         /// <returns>Результат импорта, содержащий информацию о результате операции.</returns>
-        public async Task<BaseResponse<IImportResult>> ImportExcelFile(
+        public async Task<BaseResponse<string>> ImportExcelFile(
             Guid fileId,
             PlatformEnum platform,
             IEnumerable<FieldMapping> mappings,
@@ -141,10 +141,11 @@ namespace Webflow.Application.Services.Import.Implementations
                                      basicProperties: null,
                                      body: body);
 
-                return new BaseResponse<IImportResult>()
+                return new BaseResponse<string>()
                 {
                     IsSuccess = true,
-                    Data = null
+                    Data = "Файл принят в обработку"
+                    
                 };
             }
             //var strategy = importStrategyFactory.CreateStrategy(platform);
