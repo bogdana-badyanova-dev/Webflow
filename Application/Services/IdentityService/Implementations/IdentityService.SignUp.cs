@@ -25,7 +25,11 @@ namespace Webflow.Application.Services.Identity.Implementations
             var newUser = new ApplicationUser
             {
                 Email = request.Email,
-                UserName = request.Email
+                UserName = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                MiddleName = request.MiddleName,
+
             };
 
             var identityResult = await userManager.CreateAsync(newUser, request.Password);
