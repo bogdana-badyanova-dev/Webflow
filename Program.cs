@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OfficeOpenXml;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using System.Reflection;
 using System.Text;
 using Webflow.API.Dto.Import;
@@ -94,6 +93,9 @@ namespace Webflow
             builder.Services.AddScoped<IImportStrategyFactory<IImportResult>, ImportStrategyFactory>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
             builder.Services.AddScoped<INotificationFactory, NotificationFactory>();
+            //builder.Services.AddScoped<IImportValidationStrategyFactory, ImportValidationStrategyFactory>();
+            //builder.Services.AddScoped<MoodleValidateStrategy>();
+            //builder.Services.AddScoped<InnopolisValidateStrategy>();
             builder.Services.AddSingleton(sp =>
             {
                 return new ConnectionFactory()
