@@ -48,36 +48,32 @@ public partial class RabbitMQBackgroundService : BackgroundService
                             var importStrategy = importStrategyFactory.CreateStrategy(data.Platform);
                             var importModel = await importStrategy.Import(data.FileId, data.Mappings);
 
-                            //var importValidateStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
-                            //var validateStrategy = importValidateStrategyFactory.CreateStrategy(data.Platform);
-                            //var validationResult = await validateStrategy.Validate(importModel);
+                            var importValidateStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
+                            var validateStrategy = importValidateStrategyFactory.CreateStrategy(data.Platform);
+                            var validationResult = await validateStrategy.Validate(importModel);
 
-                            //if (!validationResult.IsSuccess)
-                            //{
-                            //    await notificationService.SendNotificationAsync(NotificationType.Object, null, validationResult);
-                            //}
-                            //else
-                            //{
-
-
+                            if (!validationResult.IsSuccess)
+                            {
+                                await notificationService.SendNotificationAsync(NotificationType.Object, null, validationResult);
+                            }
+                            else
+                            {
                                 //TODO
                                 //для МУДЛА
-                                //сохранить проверить студента, 
+                                //сохранить проверить студента,
                                 //сохранить проверить курс,
                                 //сохранить элементы для курса
                                 //сохранить результаты студента(элементы курса)
                                 //посчитать итоговые баллы по элементам курса
-                                //
-                                //
+
                                 //для ИННОПОЛИС
                                 //сохранить проверить студента, 
                                 //сохранить проверить курс,
                                 //сохранить компитенции
                                 // результат по каждой компитенции
-                                //
 
                                 await notificationService.SendNotificationAsync(NotificationType.Success, "Обработан");
-                            //}
+                            }
 
                         }
 
