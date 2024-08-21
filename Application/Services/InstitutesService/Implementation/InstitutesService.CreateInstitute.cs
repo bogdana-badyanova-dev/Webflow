@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
 using Webflow.Application.Enums;
 using Webflow.Application.Messages.ErrorMessages.Students;
 using Webflow.Application.Services.InstitutesService.Interfaces;
+using Webflow.Application.Validators.Institutes;
 using Webflow.Domain.Institutes;
 
 namespace Webflow.Application.Services.InstitutesService.Implementation
@@ -21,6 +23,15 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
                 IsSuccess = false,
                 ErrorMessages = new List<string>()
             };
+
+            var validator = new CreateInstituteRequestValidator();
+            var validationResult = validator.Validate(request);
+
+            if (!validationResult.IsValid)
+            {
+                response.ErrorMessages = validationResult.Errors.Select(e => e.ErrorMessage);
+                return response;
+            }
 
             var institute = mapper.Map<Institute>(request);
             var result = await institutesRepository.AddAsync(institute, cancellationToken);
