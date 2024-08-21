@@ -25,6 +25,8 @@ using Webflow.Application.Services.InstitutesService.Implementation;
 using Webflow.Application.Services.InstitutesService.Interfaces;
 using Webflow.Application.Services.NotificationsService.Implementations;
 using Webflow.Application.Services.NotificationsService.Interfaces;
+using Webflow.Application.Services.SkillsService.Implementations;
+using Webflow.Application.Services.SkillsService.Interfaces;
 using Webflow.Application.Services.StudentsService.Implementations;
 using Webflow.Application.Services.StudentsService.Interfaces;
 using Webflow.Domain.Files;
@@ -36,6 +38,7 @@ using Webflow.Infrastructure.Repositories.FilesRepository.Implementations;
 using Webflow.Infrastructure.Repositories.FilesRepository.Interfaces;
 using Webflow.Infrastructure.Repositories.InstitutesRepository.Implementations;
 using Webflow.Infrastructure.Repositories.InstitutesRepository.Interfaces;
+using Webflow.Infrastructure.Repositories.SkillsRepository.Interfaces;
 using Webflow.Infrastructure.Repositories.StudentsRepository.Implementations;
 using Webflow.Infrastructure.Repositories.StudentsRepository.Interfaces;
 
@@ -81,6 +84,8 @@ namespace Webflow
             builder.Services.AddScoped<IBaseRepository<UploadedFile>, BaseRepository<UploadedFile>>();
             builder.Services.AddScoped<IStudentsService, StudentsService>();
             builder.Services.AddScoped<IInstitutesService, InstitutesService>();
+            builder.Services.AddScoped<ISkillsRepository, ISkillsRepository>();
+            builder.Services.AddScoped<ISkillsService, SkillsService>();
             builder.Services.AddScoped<IImportService, ImportService>();
             builder.Services.AddScoped<IInstitutesRepository, InstitutesRepository>();
             builder.Services.AddScoped<IStudentsRepository, StudentsRepository>();

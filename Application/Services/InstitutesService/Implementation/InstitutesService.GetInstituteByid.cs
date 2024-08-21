@@ -31,14 +31,14 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 
             if (result == null)
             {
-                response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_NOT_FOUND);
+                response.ErrorMessages.Append(SkillsErrorMessages.INSTITUTE_NOT_FOUND);
                 return response;
             }
 
-            var InstituteData = mapper.Map<InstituteViewDto>(result);
+            var data = mapper.Map<InstituteViewDto>(result);
 
             response.IsSuccess = true;
-            response.Data = InstituteData;
+            response.Data = data;
             return response;
         }
     }
