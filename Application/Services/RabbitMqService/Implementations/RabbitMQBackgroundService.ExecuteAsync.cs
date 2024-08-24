@@ -48,16 +48,18 @@ public partial class RabbitMQBackgroundService : BackgroundService
                             var importStrategy = importStrategyFactory.CreateStrategy(data.Platform);
                             var importModel = await importStrategy.Import(data.FileId, data.Mappings);
 
-                            var importValidationStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
-                            var validationStrategy = importValidationStrategyFactory.CreateStrategy(data.Platform);
-                            var validationResult = await validationStrategy.Validate(importModel);
+                            await notificationService.SendNotificationAsync(NotificationType.Object, null, importModel);
 
-                            if (!validationResult.IsSuccess)
-                            {
-                                await notificationService.SendNotificationAsync(NotificationType.Object, null, validationResult);
-                            }
-                            else
-                            {
+                            //var importValidationStrategyFactory = scope.ServiceProvider.GetRequiredService<ImportValidationStrategyFactory>();
+                            //var validationStrategy = importValidationStrategyFactory.CreateStrategy(data.Platform);
+                            //var validationResult = await validationStrategy.Validate(importModel);
+
+                            //if (!validationResult.IsSuccess)
+                            //{
+                            //    await notificationService.SendNotificationAsync(NotificationType.Object, null, validationResult);
+                            //}
+                            //else
+                            //{
                                 //TODO
                                 //для МУДЛА
                                 //сохранить проверить студента,
@@ -72,8 +74,8 @@ public partial class RabbitMQBackgroundService : BackgroundService
                                 //сохранить компитенции
                                 // результат по каждой компитенции
 
-                                await notificationService.SendNotificationAsync(NotificationType.Success, "Обработан");
-                            }
+                                //await notificationService.SendNotificationAsync(NotificationType.Success, "Обработан");
+                            //}
 
                         }
 

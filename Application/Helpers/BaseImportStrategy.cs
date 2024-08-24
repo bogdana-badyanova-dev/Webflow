@@ -47,29 +47,36 @@ namespace Webflow.Application.Helpers
                     }
 
                     var modelFields = typeof(K).GetProperties()
-                        .Select((prop, index) => new { prop.Name, Index = index })
+                        .Select((prop, index) => new
+                        {
+                            Name = prop.Name.ToLower(),
+                            Index = index
+                        })
                         .ToList();
 
                     var mappingIndexes = new Dictionary<int, List<int>>();
 
-                    for (int col = 1; col <= worksheet.Dimension.End.Column; col++)
+                    for (int col = 1; col <= worksheet.Dimension.End.Column+1; col++)
                     {
-                        var tableField = worksheet.Cells[1, col].Text;
-                        var mappingField = mappings.FirstOrDefault(m => m.ColumnName == tableField);
+                        var tableField = worksheet.Cells[1, col].Text.ToLower();
+                        var mappingField = mappings.FirstOrDefault(m => m.ColumnName.ToLower() == tableField);
 
                         if (mappingField == null) continue;
 
-                        var modelField = modelFields.FirstOrDefault(mf => mf.Name == mappingField.ModelField);
+                        var modelField = modelFields.FirstOrDefault(mf => mf.Name.ToLower() == mappingField.ModelField.ToLower());
 
                         if (modelField == null) continue;
 
                         int modelFieldIndex = modelField.Index;
 
                         // Получаем информацию о свойстве модели
-                        var propertyInfo = typeof(K).GetProperty(modelField.Name);
+                        var propertyInfo = typeof(K).GetProperty(
+                            modelField.Name,
+                            BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance
+                        );
 
                         // Проверяем, является ли это поле IEnumerable
-                        if (propertyInfo != null && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) && propertyInfo.PropertyType != typeof(string))
+                        if (propertyInfo != null && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
                         {
                             // Если поле является IEnumerable, добавляем его в mappingIndexes как список столбцов
                             if (!mappingIndexes.ContainsKey(modelFieldIndex))
@@ -98,9 +105,8 @@ namespace Webflow.Application.Helpers
                             int modelFieldIndex = mapping.Key;
                             var columns = mapping.Value;
 
-                            var a = typeof(K).GetProperties();
-
-                            var propertyInfo = a.ElementAt(modelFieldIndex);
+                            var propertyInfo = typeof(K).GetProperties()
+                            .FirstOrDefault(p => p.Name.ToLower() == modelFields[modelFieldIndex].Name.ToLower());
 
                             foreach (var col in columns)
                             {
@@ -128,7 +134,11 @@ namespace Webflow.Application.Helpers
         /// <param name="courseElementName">Опциональное имя элемента курса для дополнительной контекстной информации</param>
         protected virtual void SetPropertyValue(K model, PropertyInfo propertyInfo, string cellValue, string courseElementName = null)
         {
-            bool isEnumerableProperty = typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType);
+            bool isEnumerableProperty = propertyInfo != null &&
+    typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType) &&
+    propertyInfo.PropertyType != typeof(string) &&
+    propertyInfo.PropertyType.GetInterfaces()
+        .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
 
             if (isEnumerableProperty)
             {
