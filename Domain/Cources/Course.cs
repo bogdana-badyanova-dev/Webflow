@@ -1,5 +1,6 @@
 ﻿using Webflow.Application.Enums;
 using Webflow.Application.Interfaces.Courses;
+using Webflow.Domain.Shared;
 using Webflow.Domain.Skills;
 using Webflow.Domain.Students;
 
@@ -16,13 +17,8 @@ namespace Webflow.Domain.Cources
     ///     <item><description><see cref="CourseElements"/> для Moodle-курсов</description></item>
     /// </list>
     /// </remarks>
-    public class Course : IMoodleCourse, IInnopolisCourse
+    public class Course : BaseEntity<Guid>, IMoodleCourse, IInnopolisCourse
     {
-        /// <summary>
-        /// Уникальный идентификатор курса
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Название курса
         /// </summary>

@@ -59,7 +59,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<Folder Include="API\Controllers\Skills\" />
 	<Folder Include="Domain\CourseResults\" />
 	<Folder Include="Domain\Attendance\" />
 	<Folder Include="Domain\CourseResults\" />

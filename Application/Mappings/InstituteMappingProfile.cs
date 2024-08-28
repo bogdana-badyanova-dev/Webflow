@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Webflow.API.Dto.Institutes;
-using Webflow.API.Dto.Students;
 using Webflow.Domain.Institutes;
 using Webflow.Domain.Shared;
-using Webflow.Domain.Students;
 
 namespace Webflow.Application.Mappings
 {
@@ -18,8 +16,9 @@ namespace Webflow.Application.Mappings
         /// </summary>
         public InstituteMappingProfile()
         {
-            CreateMap<Institute, InstituteViewDto>();
+            CreateMap<Institute, InstituteView>();
             CreateMap<CreateInstituteRequest, Institute>();
+            CreateMap<PaginatedResponse<Institute>, PaginatedResponse<InstituteView>>();
         }
     }
 }

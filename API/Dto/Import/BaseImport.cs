@@ -3,7 +3,7 @@
     /// <summary>
     /// Абстрактный класс для передачи данных импорта, содержащий общие свойства для обработки данных студентов и курсов
     /// </summary>
-    public abstract class BaseImportDto
+    public abstract class BaseImport
     {
         /// <summary>
         /// ФИО студента

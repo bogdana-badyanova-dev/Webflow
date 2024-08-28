@@ -8,7 +8,7 @@ namespace Webflow.API.Dto.Students
     /// <summary>
     /// Объект передачи данных студента
     /// </summary>
-    public class StudentViewDto : MutableEntity<Guid>
+    public class StudentView : MutableEntity<Guid>
     {
         /// <summary>
         /// Имя студента

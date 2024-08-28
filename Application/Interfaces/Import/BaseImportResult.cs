@@ -5,8 +5,8 @@ namespace Webflow.Application.Interfaces.Import
     /// <summary>
     /// Базовый класс для результата импорта данных, содержащий идентификатор файла и данные
     /// </summary>
-    /// <typeparam name="T">Тип данных, производный от <see cref="BaseImportDto"/></typeparam>
-    public abstract class BaseImportResult<T> : IImportResult where T : BaseImportDto
+    /// <typeparam name="T">Тип данных, производный от <see cref="BaseImport"/></typeparam>
+    public abstract class BaseImportResult<T> : IImportResult where T : BaseImport
     {
         /// <summary>
         /// Идентификатор файла, связанного с результатом импорта

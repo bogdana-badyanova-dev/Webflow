@@ -7,7 +7,7 @@ namespace Webflow.Application.Validators.Institutes
     {
         public CreateInstituteRequestValidator()
         {
-            RuleFor(request => request.Name).NotNull().NotEmpty().WithMessage("Наименование института оябзательно");
+            RuleFor(request => request.Name).NotNull().NotEmpty().WithMessage("Наименование института обязательно");
         }
     }
 }

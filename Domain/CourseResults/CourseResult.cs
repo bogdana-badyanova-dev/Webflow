@@ -1,4 +1,6 @@
-﻿using Webflow.Application.Interfaces.CourseResults;
+﻿using Webflow.Application.Interfaces;
+using Webflow.Application.Interfaces.CourseResults;
+using Webflow.Domain.Shared;
 
 namespace Webflow.Domain.CourseResults
 {
@@ -13,7 +15,9 @@ namespace Webflow.Domain.CourseResults
     ///     <item><description>Специфичные свойства для Иннополиса, определенные в <see cref="IInnopolisCourseResult"/></description></item>
     /// </list>
     /// </remarks>
-    public class CourseResult : MoodleCourseResult, IInnopolisCourseResult
+    public class CourseResult :  BaseEntity<Guid>, IMoodleCourseResult, IInnopolisCourseResult
     {
+        // TODO Убрать этот бред
+        public required string Name { get; set; }
     }
 }

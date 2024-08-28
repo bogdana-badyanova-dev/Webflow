@@ -5,7 +5,7 @@ namespace Webflow.API.Dto.Import
     /// <summary>
     /// Представляет импорт данных для студентов Иннополиса
     /// </summary>
-    public class InnopolisImport : BaseImportDto
+    public class InnopolisImport : BaseImport
     {
         /// <summary>
         /// Идентификатор аккаунта в Иннополисе

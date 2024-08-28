@@ -5,7 +5,7 @@ namespace Webflow.Application.Services.SkillsService.Interfaces
 {
     public interface ISkillsService
     {
-        public Task<BaseResponse<SkillViewDto>> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        public Task<BaseResponse<SkillView>> Create(CreateSkillRequest request, CancellationToken cancellationToken);
+        public Task<BaseResponse<SkillView>> GetById(Guid? id, CancellationToken cancellationToken);
     }
-
 }

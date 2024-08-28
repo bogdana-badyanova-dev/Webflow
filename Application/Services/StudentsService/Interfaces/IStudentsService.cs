@@ -16,7 +16,7 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// <param name="id">Уникальный идентификатор студента. Может быть null</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Возвращает объект <see cref="BaseResponse{StudentViewDto}"/>, содержащий информацию о студенте или сообщения об ошибках</returns>
-        public Task<BaseResponse<StudentViewDto>> GetStudentById(Guid? id, CancellationToken cancellationToken);
+        public Task<BaseResponse<StudentView>> GetStudentById(Guid? id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Получение списка студентов с поддержкой пагинации и сортировки
@@ -24,7 +24,7 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// <param name="request">Запрос с параметрами пагинации, фильтрации и сортировки</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ, содержащий список студентов и общую информацию о пагинации</returns>
-        public Task<BaseResponse<PaginatedResponse<StudentViewDto>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken);
+        public Task<BaseResponse<PaginatedResponse<StudentView>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаление студента по идентификатору
@@ -48,7 +48,7 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// <param name="id">Идентификатор студента</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public Task<BaseResponse<StudentViewDto>> CreateStudent(CreateStudentRequest request, CancellationToken cancellationToken);
+        public Task<BaseResponse<StudentView>> CreateStudent(CreateStudentRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// обновление студента по идентификатору
@@ -56,6 +56,6 @@ namespace Webflow.Application.Services.StudentsService.Interfaces
         /// <param name="id">Идентификатор студента</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public Task<BaseResponse<StudentViewDto>> UpdateStudent(Guid? id, UpdateStudentRequest request, CancellationToken cancellationToken);
+        public Task<BaseResponse<StudentView>> UpdateStudent(Guid? id, UpdateStudentRequest request, CancellationToken cancellationToken);
     }
 }

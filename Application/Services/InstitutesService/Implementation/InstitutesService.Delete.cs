@@ -7,13 +7,7 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 {
     public partial class InstitutesService : IInstitutesService
     {
-        /// <summary>
-        /// Удаление института по идентификатору
-        /// </summary>
-        /// <param name="id">Идентификатор института</param>
-        /// <param name="cancellationToken">Токен отмены операции</param>
-        /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public async Task<BaseResponse<string>> DeleteInstitute(Guid? id, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Delete(Guid? id, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<string>()
             {
@@ -21,16 +15,16 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
                 ErrorMessages = new List<string>()
             };
 
-            if (id == null)
+            if (response.IsSuccess)
             {
-                response.ErrorMessages.Append(InstituteErrorMessages.ID_CANNOT_BE_NULL);
+                response.ErrorMessages.Append(InstitutesErrorMessages.ID_CANNOT_BE_NULL);
                 return response;
             }
 
             var institute = await institutesRepository.GetByIdAsync((Guid)id, cancellationToken);
             if (institute == null)
             {
-                response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_NOT_FOUND);
+                response.ErrorMessages.Append(InstitutesErrorMessages.INSTITUTE_NOT_FOUND);
                 return response;
             }
 

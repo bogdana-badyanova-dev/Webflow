@@ -5,7 +5,7 @@ namespace Webflow.API.Dto.Institutes
     /// <summary>
     /// Объект передачи данных института
     /// </summary>
-    public class InstituteViewDto : BaseEntity<Guid>
+    public class InstituteView : BaseEntity<Guid>
     {
         /// <summary>
         /// Название института

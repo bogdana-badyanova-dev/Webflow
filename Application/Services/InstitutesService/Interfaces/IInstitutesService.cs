@@ -1,5 +1,6 @@
 ﻿using Webflow.API.Dto.Institutes;
 using Webflow.API.Dto.Shared;
+using Webflow.Domain.Shared;
 
 namespace Webflow.Application.Services.InstitutesService.Interfaces
 {
@@ -9,27 +10,18 @@ namespace Webflow.Application.Services.InstitutesService.Interfaces
     /// </summary>
     public interface IInstitutesService
     {
-        /// <summary>
-        /// Создание студента
-        /// </summary>
-        /// <param name="cancellationToken">Токен отмены операции</param>
-        /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public Task<BaseResponse<InstituteViewDto>> CreateInstitute(CreateInstituteRequest request,CancellationToken cancellationToken);
+        public Task<BaseResponse<InstituteView>> Create(CreateInstituteRequest request,CancellationToken cancellationToken);
+        public Task<BaseResponse<InstituteView>> GetById(Guid? id,CancellationToken cancellationToken);
+        public Task<BaseResponse<string>> Delete(Guid? id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Получение института по идентификатору
+        /// Получает постраничный список институтов по запросу.
         /// </summary>
-        /// <param name="id">Идентификатор института</param>
-        /// <param name="cancellationToken">Токен отмены операции</param>
-        /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public Task<BaseResponse<InstituteViewDto>> GetInstituteById(Guid? id,CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Удаление института по идентификатору
-        /// </summary>
-        /// <param name="id">Идентификатор института</param>
-        /// <param name="cancellationToken">Токен отмены операции</param>
-        /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public Task<BaseResponse<string>> DeleteInstitute(Guid? id,CancellationToken cancellationToken);
+        /// <param name="request">Запрос, содержащий параметры пагинации и фильтрации.</param>
+        /// <param name="cancellationToken">Токен отмены для прерывания операции.</param>
+        /// <returns>Возвращает объект ответа с постраничным списком институтов, если запрос успешен. В противном случае возвращает ошибку.</returns>
+        /// <response code="200">Возвращает постраничный список институтов.</response>
+        /// <response code="400">Возвращает ошибку, если запрос содержит некорректные параметры.</response>
+        public Task<BaseResponse<PaginatedResponse<InstituteView>>> GetPaged(GetPagedInstitutesRequest request, CancellationToken cancellationToken);
     }
 }

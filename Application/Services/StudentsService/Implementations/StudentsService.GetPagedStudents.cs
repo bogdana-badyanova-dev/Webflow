@@ -14,11 +14,11 @@ namespace Webflow.Application.Services.StudentsService.Implementations
         /// <param name="request">Запрос с параметрами пагинации, фильтрации и сортировки</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Ответ, содержащий список студентов и общую информацию о пагинации</returns>
-        public async Task<BaseResponse<PaginatedResponse<StudentViewDto>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<PaginatedResponse<StudentView>>> GetPagedStudents(GetPagedStudentsRequest request, CancellationToken cancellationToken)
         {
             var result = await studentsRepository.GetPagedAsync(request, cancellationToken);
 
-            var response = new BaseResponse<PaginatedResponse<StudentViewDto>>()
+            var response = new BaseResponse<PaginatedResponse<StudentView>>()
             {
                 IsSuccess = false,
                  ErrorMessages = new List<string>()
@@ -30,7 +30,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
                 return response;
             }
 
-            var studentsData = mapper.Map<PaginatedResponse<StudentViewDto>>(result);
+            var studentsData = mapper.Map<PaginatedResponse<StudentView>>(result);
             response.IsSuccess = true;
             response.Data = studentsData;
             return response;

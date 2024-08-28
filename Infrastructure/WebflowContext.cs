@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Webflow.Domain.Cources;
+using Webflow.Domain.CourseResults;
 using Webflow.Domain.Files;
 using Webflow.Domain.Groups;
 using Webflow.Domain.Institutes;
@@ -69,5 +70,10 @@ namespace Webflow.Infrastructure
         /// Представление таблицы элементов курсов в СДО СевГУ в базе данных
         /// </summary>
         public DbSet<MoodleCourseElement> MoodleCourseElements { get; set; } = default!;
+
+        /// <summary>
+        /// Представляет таблицу Результатов курсов в базе данных
+        /// </summary>
+        public DbSet<CourseResult> CourseResults { get; set; } = default!;
     }
 }

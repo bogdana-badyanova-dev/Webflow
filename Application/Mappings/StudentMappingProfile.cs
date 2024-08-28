@@ -16,10 +16,10 @@ namespace Webflow.Application.Mappings
         /// </summary>
         public StudentMappingProfile()
         {
-            CreateMap<Student, StudentViewDto>();
+            CreateMap<Student, StudentView>();
             CreateMap<CreateStudentRequest, Student>();
             CreateMap<UpdateStudentRequest, Student>();
-            CreateMap<PaginatedResponse<Student>, PaginatedResponse<StudentViewDto>>();
+            CreateMap<PaginatedResponse<Student>, PaginatedResponse<StudentView>>();
         }
     }
 }

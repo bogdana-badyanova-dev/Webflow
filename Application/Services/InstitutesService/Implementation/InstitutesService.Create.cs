@@ -10,18 +10,21 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 {
     public partial class InstitutesService : IInstitutesService
     {
-        /// <summary>
-        /// Создание студента
-        /// </summary>
-        /// <param name="cancellationToken">Токен отмены операции</param>
-        /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public async Task<BaseResponse<InstituteViewDto>> CreateInstitute(CreateInstituteRequest request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<InstituteView>> Create(CreateInstituteRequest request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<InstituteViewDto>()
+            var response = new BaseResponse<InstituteView>()
             {
                 IsSuccess = false,
                 ErrorMessages = new List<string>()
             };
+
+            var existingInstitute = await institutesRepository.FindAsync(i => i.Name == request.Name, cancellationToken);
+
+            if (existingInstitute.Any())
+            {
+                response.ErrorMessages = new List<string>() { InstitutesErrorMessages.INSTITUTE_ALREADY_EXISTS };
+                return response;
+            }
 
             var validator = new CreateInstituteRequestValidator();
             var validationResult = validator.Validate(request);
@@ -37,12 +40,12 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 
             if (result == Guid.Empty)
             {
-                response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_CANNOT_CREATE);
+                response.ErrorMessages.Append(InstitutesErrorMessages.INSTITUTE_CANNOT_CREATE);
                 return response;
             }
 
             response.IsSuccess = true;
-            response.Data = mapper.Map<InstituteViewDto>(institute);
+            response.Data = mapper.Map<InstituteView>(institute);
 
             var notificationMessage = $"Институт '{institute.Name}' был успешно создан.";
             await notificationService.SendNotificationAsync(NotificationType.Success, notificationMessage);

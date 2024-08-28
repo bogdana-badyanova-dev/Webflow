@@ -13,9 +13,9 @@ namespace Webflow.Application.Services.StudentsService.Implementations
         /// <param name="id">Уникальный идентификатор студента. Может быть null</param>
         /// <param name="cancellationToken">Токен отмены операции</param>
         /// <returns>Возвращает объект <see cref="BaseResponse{StudentViewDto}"/>, содержащий информацию о студенте или сообщения об ошибках</returns>
-        public async Task<BaseResponse<StudentViewDto>> GetStudentById(Guid? id, CancellationToken cancellationToken)
+        public async Task<BaseResponse<StudentView>> GetStudentById(Guid? id, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<StudentViewDto>()
+            var response = new BaseResponse<StudentView>()
             {
                 IsSuccess = false,
                 ErrorMessages = new List<string>()
@@ -35,7 +35,7 @@ namespace Webflow.Application.Services.StudentsService.Implementations
                 return response;
             }
 
-            var studentData = mapper.Map<StudentViewDto>(result);
+            var studentData = mapper.Map<StudentView>(result);
 
             response.IsSuccess = true;
             response.Data = studentData;

@@ -3,7 +3,7 @@
     /// <summary>
     /// Представляет импорт данных для Moodle
     /// </summary>
-    public class MoodleImport : BaseImportDto
+    public class MoodleImport : BaseImport
     {
         /// <summary>
         /// Идентификатор аккаунта в Moodle

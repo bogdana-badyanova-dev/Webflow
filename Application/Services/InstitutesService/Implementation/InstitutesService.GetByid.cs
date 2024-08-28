@@ -7,15 +7,9 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 {
     public partial class InstitutesService : IInstitutesService
     {
-        /// <summary>
-        /// Получение института по идентификатору
-        /// </summary>
-        /// <param name="id">Идентификатор института</param>
-        /// <param name="cancellationToken">Токен отмены операции</param>
-        /// <returns>Ответ, содержащий результат операции удаления</returns>
-        public async Task<BaseResponse<InstituteViewDto>> GetInstituteById(Guid? id, CancellationToken cancellationToken)
+        public async Task<BaseResponse<InstituteView>> GetById(Guid? id, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<InstituteViewDto>()
+            var response = new BaseResponse<InstituteView>()
             {
                 IsSuccess = false,
                 ErrorMessages = new List<string>()
@@ -23,7 +17,7 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 
             if (id == null)
             {
-                response.ErrorMessages.Append(StudentErrorMessages.ID_CANNOT_BE_NULL);
+                response.ErrorMessages.Append(InstitutesErrorMessages.ID_CANNOT_BE_NULL);
                 return response;
             }
 
@@ -31,11 +25,11 @@ namespace Webflow.Application.Services.InstitutesService.Implementation
 
             if (result == null)
             {
-                response.ErrorMessages.Append(InstituteErrorMessages.INSTITUTE_NOT_FOUND);
+                response.ErrorMessages.Append(InstitutesErrorMessages.INSTITUTE_NOT_FOUND);
                 return response;
             }
 
-            var data = mapper.Map<InstituteViewDto>(result);
+            var data = mapper.Map<InstituteView>(result);
 
             response.IsSuccess = true;
             response.Data = data;
