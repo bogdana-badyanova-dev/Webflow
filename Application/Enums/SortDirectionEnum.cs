@@ -1,8 +1,11 @@
-﻿namespace Webflow.Application.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace Webflow.Application.Enums
 {
     /// <summary>
     /// Перечисление, представляющее возможные направления сортировки
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum SortDirectionEnum
     {
         /// <summary>

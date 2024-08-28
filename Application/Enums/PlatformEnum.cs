@@ -1,8 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace Webflow.Application.Enums
 {
     /// <summary>
     /// Перечисление поддерживаемых платформ
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PlatformEnum
     {
         /// <summary>
@@ -19,5 +22,10 @@ namespace Webflow.Application.Enums
         /// СДО СевГУ
         /// </summary>
         MOODLE = 2,
+
+        /// <summary>
+        /// 1С Университет
+        /// </summary>
+        ONE_C = 3,
     }
 }

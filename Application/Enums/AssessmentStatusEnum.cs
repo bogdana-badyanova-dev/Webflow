@@ -1,8 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace Webflow.Application.Enums
 {
     /// <summary>
     /// Перечисление статусов ассесмента
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AssessmentStatusEnum
     {
         /// <summary>

@@ -1,8 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace Webflow.Application.Enums
 {
     /// <summary>
     /// Перечисление уровней компетенции
     /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ProficiencyLevelEnum
     {
         /// <summary>

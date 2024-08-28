@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using Webflow.Application.Enums;
 
 namespace Webflow.API.Dto.Students
@@ -12,13 +14,16 @@ namespace Webflow.API.Dto.Students
         /// Имя студента
         /// </summary>
         [DefaultValue("Sasha")]
-        public required string FirstName { get; set; }
+        [Required(ErrorMessage = "Имя обязательно для заполнения.")]
+        [Display(Name = "Имя студента")]
+        public string FirstName { get; set; }
 
         /// <summary>
         /// Фамилия студента
         /// </summary>
         [DefaultValue("Gray")]
-        public required string LastName { get; set; }
+        [Required(ErrorMessage = "Фамилия обязательна для заполнения.")]
+        public string LastName { get; set; }
 
         /// <summary>
         /// Отчество студента
@@ -30,8 +35,10 @@ namespace Webflow.API.Dto.Students
         /// Электронная почта студента
         /// </summary>
         [DefaultValue("example@gmail.com")]
+        [Required(ErrorMessage = "Email обязателен для заполнения.")]
+        [EmailAddress(ErrorMessage = "Недопустимый адрес электронной почты.")]
+        public string Email { get; set; }
 
-        public required string Email { get; set; }
         /// <summary>
         /// Дата рождения студента
         /// </summary>
@@ -42,6 +49,7 @@ namespace Webflow.API.Dto.Students
         /// Номер телефона студента
         /// </summary>
         [DefaultValue("+77777777777")]
+        [Phone(ErrorMessage = "Недопустимый номер телефона.")]
         public string? Phone { get; set; }
 
         /// <summary>
@@ -60,7 +68,8 @@ namespace Webflow.API.Dto.Students
         /// Пол студента
         /// </summary>
         [DefaultValue(GenderEnum.MALE)]
-        public required GenderEnum Gender { get; set; } = GenderEnum.UNDEFINED;
+        [Required]
+        public GenderEnum Gender { get; set; }
 
         /// <summary>
         /// Идентификатор группы, к которой относится студент
