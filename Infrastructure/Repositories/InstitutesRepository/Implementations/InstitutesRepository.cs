@@ -26,6 +26,12 @@ namespace Webflow.Infrastructure.Repositories.InstitutesRepository.Implementatio
         {
             IQueryable<Institute> query = _dbSet;
 
+            // Применяем фильтрацию по имени, если оно указано
+            if (!string.IsNullOrWhiteSpace(request.Name))
+            {
+                query = query.Where(i => i.Name.Contains(request.Name));
+            }
+
             var totalCount = await query.CountAsync(cancellationToken);
             var institutes = await query
                 .Skip((request.Page - 1) * request.Size)

@@ -151,7 +151,7 @@ namespace Webflow
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("https://sevsu-webflow.vercel.app", "http://localhost:4200", "http://localhost:14637")
+                builder.WithOrigins("https://sevsu-webflow.vercel.app", "http://localhost:4200", "https://localhost:4200")
                 .AllowAnyHeader()
                 .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                 .AllowCredentials();
